@@ -3,30 +3,609 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Конспекты лекций III семестра в формате PDF.">
+  <meta name="theme-color" content="#2d0908">
   <title>Конспекты — III семестр</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='8' fill='%23f1ede2'/%3E%3Crect x='5' y='5' width='54' height='54' rx='5' fill='none' stroke='%23521d18' stroke-width='3'/%3E%3Ctext x='32' y='42' text-anchor='middle' font-family='Georgia,serif' font-size='31' font-weight='700' fill='%23281715'%3EIII%3C/text%3E%3C/svg%3E">
   <style>
-    body { max-width: 760px; margin: 48px auto; padding: 0 20px; font: 18px/1.55 Georgia, serif; color: #1f2328; }
-    h1 { line-height: 1.15; }
-    li { margin: 0.65em 0; }
-    a { color: #0969da; }
-    footer { margin-top: 2.5rem; border-top: 1px solid #d0d7de; padding-top: 1rem; }
+    :root {
+      color-scheme: light;
+      --wood-dark: #1d0807;
+      --wood: #4b1712;
+      --wood-light: #7a3125;
+      --card: #f1eee4;
+      --card-warm: #e9e2d4;
+      --ink: #291d1a;
+      --ink-soft: #554741;
+      --rule: rgba(66, 46, 40, 0.42);
+      --shadow: 0 20px 35px rgba(0, 0, 0, 0.32), 0 3px 7px rgba(0, 0, 0, 0.26);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-width: 320px;
+      min-height: 100vh;
+      margin: 0;
+      background:
+        linear-gradient(93deg, transparent 0 13%, rgba(255, 255, 255, 0.025) 13.2%, transparent 13.6% 41%, rgba(0, 0, 0, 0.1) 41.3%, transparent 42%),
+        repeating-linear-gradient(7deg, rgba(255, 255, 255, 0.017) 0 1px, rgba(0, 0, 0, 0.018) 1px 4px),
+        radial-gradient(ellipse at 50% -10%, var(--wood-light), var(--wood) 45%, var(--wood-dark) 100%);
+      color: var(--ink);
+      font-family: "Baskerville", "Palatino Linotype", Palatino, Georgia, serif;
+      font-size: 16px;
+      line-height: 1.5;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .page {
+      width: min(1180px, calc(100% - 40px));
+      margin: 0 auto;
+      padding: 34px 0 48px;
+    }
+
+    .utility {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      margin-bottom: 58px;
+      color: rgba(255, 247, 237, 0.78);
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .utility a {
+      text-decoration: none;
+    }
+
+    .utility a:hover {
+      color: #fff;
+    }
+
+    .monogram {
+      display: inline-grid;
+      width: 38px;
+      height: 38px;
+      place-items: center;
+      border: 1px solid rgba(255, 247, 237, 0.35);
+      border-radius: 50%;
+      font-family: Georgia, serif;
+      font-size: 0.9rem;
+      letter-spacing: 0;
+    }
+
+    .hero {
+      position: relative;
+      width: min(820px, 92%);
+      min-height: 350px;
+      margin: 0 auto 82px;
+      padding: 38px 44px 34px;
+      background:
+        radial-gradient(circle at 15% 20%, rgba(255, 255, 255, 0.5), transparent 34%),
+        repeating-radial-gradient(ellipse at 20% 50%, rgba(55, 39, 32, 0.025) 0 0.6px, transparent 0.8px 3px),
+        linear-gradient(105deg, #f4f1e9, var(--card) 57%, #e8e2d5);
+      box-shadow: var(--shadow);
+      transform: rotate(-0.55deg);
+      isolation: isolate;
+    }
+
+    .hero::before,
+    .subject-card::before,
+    .contact-card::before {
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      border: 1px solid rgba(84, 61, 51, 0.13);
+      content: "";
+      pointer-events: none;
+    }
+
+    .hero-top,
+    .hero-bottom {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 24px;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      line-height: 1.35;
+      text-transform: uppercase;
+    }
+
+    .hero-top p,
+    .hero-bottom p {
+      margin: 0;
+    }
+
+    .institution {
+      text-align: right;
+    }
+
+    .hero-title {
+      display: grid;
+      min-height: 218px;
+      place-content: center;
+      padding: 28px 0;
+      text-align: center;
+    }
+
+    h1 {
+      max-width: 640px;
+      margin: 0;
+      font-size: clamp(2.25rem, 6vw, 4.7rem);
+      font-weight: 600;
+      letter-spacing: -0.045em;
+      line-height: 0.98;
+      text-transform: uppercase;
+    }
+
+    h1 span {
+      display: block;
+      margin-top: 15px;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: clamp(0.72rem, 1.6vw, 0.93rem);
+      font-weight: 500;
+      letter-spacing: 0.24em;
+      line-height: 1.4;
+    }
+
+    .hero-bottom {
+      align-items: flex-end;
+      border-top: 1px solid var(--rule);
+      padding-top: 11px;
+    }
+
+    .hero-bottom .format {
+      text-align: right;
+    }
+
+    main {
+      display: block;
+    }
+
+    .section-label {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      margin: 0 0 28px;
+      color: rgba(255, 247, 237, 0.82);
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+
+    .section-label::after {
+      height: 1px;
+      flex: 1;
+      background: rgba(255, 247, 237, 0.24);
+      content: "";
+    }
+
+    .subjects {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 28px 32px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      counter-reset: subject;
+    }
+
+    .subject {
+      counter-increment: subject;
+    }
+
+    .subject:nth-child(2n) {
+      transform: rotate(0.35deg);
+    }
+
+    .subject:nth-child(3n) {
+      transform: rotate(-0.25deg);
+    }
+
+    .subject-card {
+      position: relative;
+      display: grid;
+      min-height: 250px;
+      padding: 25px 30px 23px;
+      overflow: hidden;
+      background:
+        repeating-radial-gradient(ellipse at 15% 35%, rgba(51, 38, 30, 0.026) 0 0.55px, transparent 0.8px 2.8px),
+        linear-gradient(110deg, #f6f3eb, var(--card) 55%, var(--card-warm));
+      color: var(--ink);
+      box-shadow: var(--shadow);
+      text-decoration: none;
+      transition: transform 220ms ease, box-shadow 220ms ease, filter 220ms ease;
+    }
+
+    .subject-card:hover {
+      z-index: 2;
+      transform: translateY(-7px) rotate(-0.2deg);
+      box-shadow: 0 30px 48px rgba(0, 0, 0, 0.4), 0 5px 10px rgba(0, 0, 0, 0.24);
+      filter: brightness(1.025);
+    }
+
+    .card-top,
+    .card-bottom {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 20px;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 0.63rem;
+      font-weight: 700;
+      letter-spacing: 0.11em;
+      line-height: 1.35;
+      text-transform: uppercase;
+    }
+
+    .card-top::before {
+      content: "№ " counter(subject, decimal-leading-zero);
+    }
+
+    .card-top::after {
+      content: "III семестр · PDF";
+      text-align: right;
+    }
+
+    .card-title {
+      display: grid;
+      place-content: center;
+      text-align: center;
+    }
+
+    .card-title strong {
+      display: block;
+      max-width: 470px;
+      font-size: clamp(1.35rem, 3vw, 2rem);
+      font-weight: 600;
+      letter-spacing: -0.025em;
+      line-height: 1.08;
+      text-transform: uppercase;
+    }
+
+    .card-title span {
+      display: block;
+      margin-top: 9px;
+      color: var(--ink-soft);
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 0.61rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    .card-bottom {
+      align-items: flex-end;
+      border-top: 1px solid var(--rule);
+      padding-top: 9px;
+    }
+
+    .card-bottom span:last-child {
+      text-align: right;
+    }
+
+    .contact-card {
+      position: relative;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 36px;
+      width: min(960px, 94%);
+      min-height: 210px;
+      margin: 92px auto 0;
+      padding: 34px 38px;
+      background:
+        repeating-radial-gradient(ellipse at 75% 30%, rgba(51, 38, 30, 0.025) 0 0.55px, transparent 0.8px 3px),
+        linear-gradient(105deg, #f3efe6, #e8e1d3);
+      box-shadow: var(--shadow);
+      transform: rotate(0.35deg);
+      isolation: isolate;
+    }
+
+    .contact-copy .kicker {
+      margin: 0 0 12px;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 0.66rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      font-weight: 600;
+      letter-spacing: -0.035em;
+      line-height: 1.05;
+      text-transform: uppercase;
+    }
+
+    .contact-copy p:last-child {
+      max-width: 620px;
+      margin: 13px 0 0;
+      color: var(--ink-soft);
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 0.9rem;
+      line-height: 1.6;
+    }
+
+    .contact-actions {
+      display: grid;
+      gap: 10px;
+      min-width: 190px;
+    }
+
+    .button {
+      display: inline-flex;
+      min-height: 42px;
+      align-items: center;
+      justify-content: center;
+      padding: 9px 15px;
+      border: 1px solid var(--ink);
+      color: var(--ink);
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-align: center;
+      text-decoration: none;
+      text-transform: uppercase;
+      transition: background 160ms ease, color 160ms ease, transform 160ms ease;
+    }
+
+    .button:hover {
+      transform: translateY(-2px);
+      background: var(--ink);
+      color: var(--card);
+    }
+
+    .button-primary {
+      background: var(--ink);
+      color: var(--card);
+    }
+
+    .button-primary:hover {
+      background: #551c17;
+    }
+
+    .footer {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      margin-top: 48px;
+      color: rgba(255, 247, 237, 0.68);
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 0.66rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .footer p {
+      margin: 0;
+    }
+
+    .footer a {
+      text-underline-offset: 3px;
+    }
+
+    a:focus-visible {
+      outline: 3px solid #f6d6a7;
+      outline-offset: 5px;
+    }
+
+    @media (max-width: 760px) {
+      .page {
+        width: min(100% - 24px, 620px);
+        padding-top: 22px;
+      }
+
+      .utility {
+        margin-bottom: 38px;
+      }
+
+      .hero {
+        width: 100%;
+        min-height: 310px;
+        margin-bottom: 62px;
+        padding: 26px 24px 24px;
+        transform: rotate(-0.25deg);
+      }
+
+      .hero-title {
+        min-height: 194px;
+      }
+
+      .subjects {
+        grid-template-columns: 1fr;
+        gap: 22px;
+      }
+
+      .subject {
+        transform: none !important;
+      }
+
+      .subject-card {
+        min-height: 220px;
+      }
+
+      .contact-card {
+        grid-template-columns: 1fr;
+        width: 100%;
+        margin-top: 68px;
+        padding: 30px 26px;
+      }
+
+      .contact-actions {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 470px) {
+      .utility {
+        font-size: 0.62rem;
+      }
+
+      .utility-label {
+        display: none;
+      }
+
+      .hero-top,
+      .hero-bottom {
+        font-size: 0.58rem;
+      }
+
+      .hero {
+        min-height: 286px;
+      }
+
+      .hero-title {
+        min-height: 178px;
+      }
+
+      .subject-card {
+        min-height: 205px;
+        padding: 21px 21px 19px;
+      }
+
+      .card-top,
+      .card-bottom {
+        font-size: 0.56rem;
+      }
+
+      .contact-actions {
+        grid-template-columns: 1fr;
+      }
+
+      .footer {
+        flex-direction: column;
+        gap: 6px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      *, *::before, *::after {
+        transition-duration: 0.01ms !important;
+      }
+    }
   </style>
 </head>
 <body>
-  <h1>Конспекты, III семестр</h1>
-  <ol>
-    <li><a href="subjects/01-theoretical-mechanics/theormech.pdf">Теоретическая механика</a></li>
-    <li><a href="subjects/02-mathematical-analysis/matan.pdf">Математический анализ</a></li>
-    <li><a href="subjects/03-complex-analysis/tfcv.pdf">Теория функций комплексной переменной</a></li>
-    <li><a href="subjects/04-group-theory-number-theory/gtnt.pdf">Теория групп и теория чисел</a></li>
-    <li><a href="subjects/05-differential-equations/di_furry.pdf">Дифференциальные уравнения</a></li>
-    <li><a href="subjects/06-numerical-methods/chislaki.pdf">Численные методы</a></li>
-    <li><a href="subjects/07-databases-network-technologies/bdst.pdf">Базы данных и сетевые технологии</a></li>
-  </ol>
-  <footer>
-    Если вы нашли ошибку, неточность или опечатку, можете создать pull request
-    в репозитории или написать в Telegram: <a href="https://t.me/Tangerine232">@Tangerine232</a>.
-  </footer>
+  <div class="page">
+    <header class="utility">
+      <a class="monogram" href="./" aria-label="На главную">III</a>
+      <span class="utility-label">Санкт-Петербургский государственный университет</span>
+      <a href="https://github.com/Tangerine232/conspects-sem3">GitHub ↗</a>
+    </header>
+
+    <section class="hero" aria-labelledby="page-title">
+      <div class="hero-top">
+        <p>III семестр<br>2026</p>
+        <p class="institution">СПбГУ<br>ПМ-ПУ</p>
+      </div>
+      <div class="hero-title">
+        <h1 id="page-title">Конспекты лекций<span>Викторова Дарья · 25.Б03-пу</span></h1>
+      </div>
+      <div class="hero-bottom">
+        <p>Семь учебных дисциплин</p>
+        <p class="format">LaTeX originals<br>PDF editions</p>
+      </div>
+    </section>
+
+    <main>
+      <p class="section-label">Предметы</p>
+      <ol class="subjects">
+        <li class="subject">
+          <a class="subject-card" href="subjects/01-theoretical-mechanics/theormech.pdf">
+            <span class="card-top" aria-hidden="true"></span>
+            <span class="card-title"><strong>Теоретическая механика</strong><span>Открыть конспект</span></span>
+            <span class="card-bottom"><span>theormech.pdf</span><span>SPbU · 2026</span></span>
+          </a>
+        </li>
+        <li class="subject">
+          <a class="subject-card" href="subjects/02-mathematical-analysis/matan.pdf">
+            <span class="card-top" aria-hidden="true"></span>
+            <span class="card-title"><strong>Математический анализ</strong><span>Открыть конспект</span></span>
+            <span class="card-bottom"><span>matan.pdf</span><span>SPbU · 2026</span></span>
+          </a>
+        </li>
+        <li class="subject">
+          <a class="subject-card" href="subjects/03-complex-analysis/tfcv.pdf">
+            <span class="card-top" aria-hidden="true"></span>
+            <span class="card-title"><strong>Теория функций комплексной переменной</strong><span>Открыть конспект</span></span>
+            <span class="card-bottom"><span>tfcv.pdf</span><span>SPbU · 2026</span></span>
+          </a>
+        </li>
+        <li class="subject">
+          <a class="subject-card" href="subjects/04-group-theory-number-theory/gtnt.pdf">
+            <span class="card-top" aria-hidden="true"></span>
+            <span class="card-title"><strong>Теория групп и теория чисел</strong><span>Открыть конспект</span></span>
+            <span class="card-bottom"><span>gtnt.pdf</span><span>SPbU · 2026</span></span>
+          </a>
+        </li>
+        <li class="subject">
+          <a class="subject-card" href="subjects/05-differential-equations/di_furry.pdf">
+            <span class="card-top" aria-hidden="true"></span>
+            <span class="card-title"><strong>Дифференциальные уравнения</strong><span>Открыть конспект</span></span>
+            <span class="card-bottom"><span>di_furry.pdf</span><span>SPbU · 2026</span></span>
+          </a>
+        </li>
+        <li class="subject">
+          <a class="subject-card" href="subjects/06-numerical-methods/chislaki.pdf">
+            <span class="card-top" aria-hidden="true"></span>
+            <span class="card-title"><strong>Численные методы</strong><span>Открыть конспект</span></span>
+            <span class="card-bottom"><span>chislaki.pdf</span><span>SPbU · 2026</span></span>
+          </a>
+        </li>
+        <li class="subject">
+          <a class="subject-card" href="subjects/07-databases-network-technologies/bdst.pdf">
+            <span class="card-top" aria-hidden="true"></span>
+            <span class="card-title"><strong>Базы данных и сетевые технологии</strong><span>Открыть конспект</span></span>
+            <span class="card-bottom"><span>bdst.pdf</span><span>SPbU · 2026</span></span>
+          </a>
+        </li>
+      </ol>
+
+      <section class="contact-card" aria-labelledby="corrections-title">
+        <div class="contact-copy">
+          <p class="kicker">Исправления и предложения</p>
+          <h2 id="corrections-title">Нашли неточность?</h2>
+          <p>Если вы заметили ошибку или опечатку, создайте pull request в репозитории или напишите мне в Telegram.</p>
+        </div>
+        <div class="contact-actions">
+          <a class="button" href="https://github.com/Tangerine232/conspects-sem3/pulls">Pull request</a>
+          <a class="button button-primary" href="https://t.me/Tangerine232">@Tangerine232</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>Конспекты · III семестр</p>
+      <p><a href="https://github.com/Tangerine232/conspects-sem3">Исходники на GitHub</a></p>
+    </footer>
+  </div>
 </body>
 </html>
 
