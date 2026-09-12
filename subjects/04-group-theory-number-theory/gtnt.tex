@@ -2,7 +2,7 @@
 \input{../../preamble.tex}
 
 \title{Теория групп и теория чисел. Неофициальный конспект}
-\author{Лектор: ФИО лектора\\
+\author{Лектор: Кривошеин Александр Владимирович\\
 Конспект: Викторова Дарья, 25.Б03-пу}
 \date{III семестр, 2026 г.}
 
@@ -45,12 +45,412 @@
 
 \setcounter{lection}{0}
 
-% Пишите конспект здесь, между \begin{document} и \end{document}.
-% Например:
-% \newlection{1 сентября 2026 г.}
-% \chapter{Название главы}
-% \section{Название раздела}
-% Обычный текст и формулы: $a^2+b^2=c^2$.
+\newlection{3 сентября 2026 г.}
+
+\chapter{Теория групп}
+
+\textit{Теория групп} - описание симметрии.
+
+\definition{\textit{Симметрия} - биективные преобразования над множеством объектов, которые сохраняют какие-то свойства.}
+
+Пример. 4 штуки симметрий (поворот на $180^0$, отражение, параллельный перенос, тождественное преобразование), сохраняющих расстояние между любыми двумя точками (изометрия).
+
+Добавить рисунок: ДПСК и нарисован квадрат на ДПСК
+
+\section{Предварительные сведения}
+
+Отображение. $f\colon X\to Y$.
+$D\subset X, f(D)$
+$E\subset Y, f^{-1}(E)$
+
+Композиция. $f\colon X\to Y$.
+$g\colon Y\to Z$.
+$g \circ f\colon X\to Z$
+$(g\circ f)(x)=g(f(x))$
+
+Ассоциативность композиции.
+\[h\circ(g\circ f)=(h\circ g)\circ f\]
+
+Инъекция
+Добавить рисунок: инъекция
+
+Сюръекция
+Добавить рисунок: сюръекция
+
+Биекция = инъекция + сюръекция.
+
+$f\colon X\to Y$
+Уравнение относительно $x\colon y = f(x)$.
+\begin{enumerate}
+    \item f - инъективна: если $\exists$, то !;
+    \item f - сюръективна: всегда $\exists$, но может быть не !;
+    \item f - биективна: $\exists!$ решение.
+\end{enumerate}
+
+$id_x\colon X\to X$ - тождественное отображение, $id_x(x)=x$.
+
+\definition{
+Отображение $f\colon X\to X$ \textit{обратимо}, если $\exists g\colon Y\to X\colon g\circ f=id_x, f\circ g = id_y$.
+
+g называется \textit{обратным отображением}.
+}
+
+Мини-теорема. Обратное отображение единственно.
+\begin{proof}
+    Пусть существует два отображения $g_1,g_2$. \\
+    $g_1=g_1\circ id_y=g_1\circ(f\circ g_2)=(g_1\circ f_\circ g_2=id_x\circ g_2=g_2$.
+\end{proof}
+
+Утверждение. $f$ обратимо $\iff$ $f$ биективно.
+Обозначим $f^{-1}$ - обратное к $f$.
+
+\definition{$X$. Бинарное отношение $R$ на $X$ - это $R\subset X\times X$.}
+
+Пример. Бинарное отношение победы первого игрока в игре "Камень, ножницы, бумага".
+
+Добавить рисунок
+
+\definition{Будем называть R \textit{отношением эквивалентности}, если оно
+\begin{enumerate}
+    \item реффлексивно: $XRX$;
+    \item симметрично: $XRY\Rightarrow YRX$;
+    \item транзитивно: $XRY, YRZ\Rightarrow XRZ$
+\end{enumerate}
+
+Обозначение: XRY.
+Запись отношения эквивалентности: $X\sim Y$.}
+
+Классы эквивалентности.
+\[[x]=\{y\in X\colon x\sim y\}\]
+$X=\bigcup_{x - \text{представители классов}} [x]$
+
+Классы эквивалентности либо совпадают, либо не пересекаются.
+
+Пример. Классы вычетов.
+\[ Z/mZ=\{[k], k = \overline{0, m-1}\}, \text{где} [k]=k+mZ. \]
+
+\section{Определение группы. Базовые свойства.}
+
+\textit{Бинарная операция} на $X$ - $\tau \colon X\times X\to X$, \\
+$(X,\tau)$ - \textit{алгебраическая структура} (magma).
+
+\definition{Группа G - это алгебраическая структура вида $(G, *)$, где бинарная операция удовлетворяет свойствам:
+\begin{enumerate}
+    \item Ассоциативности: $a *(b*c)=(a*b)*c \forall a,b,c \in G$;
+    \item Существование нейтрального элемента $e\colon a * e = e* a = a\forall a\in G$.
+    \item $\forall a \in G\exists b \in G\colon a * b = b * a = e$.
+\end{enumerate}
+
+Группа называется \textit{абелевой}, если бинарная операция коммутативна:
+\[a * b = b * a\forall a,b\in G\]
+}
+
+Мультипликативная запись: $*\to \cdot$;
+Аддитивная запись: $*\to +$.
+
+\subsection{Свойства группы}
+
+\begin{enumerate}
+    \item G - непуста;
+    Минимальная по размеру группа: $G=\{e\}$.
+    \item Нейтральный элемент единственен.
+    \item Обратный элемент единственен.
+    Для $a\in G$ обозначим обратный элемент: $a^{-1}$.
+    \item $(a^{-1})^{-1}=a$.
+    \begin{proof}
+        К $a^{-1}$ обратным является $a$; к $a^{-1}$ обратным является $(a^{-1})^{-1}$. Следовательно, $(a^{-1})^{-1}=a$.
+    \end{proof}
+    \item $(a\cdot b)^{-1} = b^{-1}\cdot a^{-1}$.
+    \item Гарантируется решение уравнений вида $ax=b$;
+    Решение: $x=a^{-1}\cdot b$.
+\end{enumerate}
+
+\definition{
+Порядок группы G - количество элементов в ней, если она конечна; $+\infty$, если группа содержит бесконечное число элементов.
+
+Обозначение: $|G|$.
+}
+
+\subsection{Таблицы умножения конечных групп (таблицы Кэли)}
+Перенумеруем элементы $G=\{e, g_2,\dots,g_n\}$, $|G|=n$.
+
+добавить рисунок таблицы
+
+\theorem{Таблицы Кэли являются латинским квадратом, то есть в любой строке, в любом столбце таблицы все элементы различны.}
+\begin{proof}
+    Предположим, что существует два одинаковых элемента.
+    \[\begin{pmatrix}g_k\cdot e & g_k\cdot g_2 & \dots & g_k\cdot g_k & \dots &g_k\cdot g_n\end{pmatrix}.\]
+    $g_k\cdot g_i=g_k\cdot g_j, i\neq j$.
+    Домножим обе части на $g_k^{-1}$.
+    Получим, что $g_i=g_j$. Противоречие.
+\end{proof}
+
+капец написать))
+
+\definition{
+Пусть $(G, \cdot), (H, *)$ --- группы. \\
+Говорят, что $G$ \textit{изоморфно} $H$, если $\exists \varphi\colon G\to H$ --- биекция. \\
+\textit{Обозначение}: G $\cong$ H. \\
+Для $a, b \in G$:
+\[
+\underbrace{\varphi(a\cdot b) = \varphi(a) * \varphi(b)}_{\text{$\varphi$ сохраняет операцию}} \quad (1)
+\]
+}
+
+\[
+\begin{array}{c|cccc}
+ & 0 & 1 & 2 \\ \hline
+0 & 0 & 1 & 2 \\
+1 & 1 & 2 & 0 \\
+2 & 2 & 0 & 1
+\end{array}
+\qquad
+\qquad
+\qquad
+\begin{array}{c|cccc}
+ & e & a & b \\ \hline
+e & e & a & b \\
+a & a & b & e \\
+b & b & e & a
+\end{array}
+\]
+
+\newlection{4 сентября 2026 г.}
+
+\subsection{Свойства изоморфизма}
+Пусть $G, H, K$ --- группы, $G\cong H$. Тогда
+\begin{enumerate}
+    \item $|G|=|H|$.
+    \item $\varphi$ --- изоморфизм. Тогда $\varphi^{-1}$ --- изоморфизм, и $H \cong G$.
+    \begin{proof}
+        Проверим равенство $(1)$ для $\varphi^{-1}$, $\varphi^{-1}\colon H\to G$. \\
+        Рассмотрим $U, V \in H$. Надо доказать, что 
+        $\varphi^{-1}(U\cdot V)=\varphi^{-1}(U)\cdot\varphi^{-1}(V)$. \\
+        Существуют $a, b\in G$ такие, что $\varphi(a)=U$, $\varphi(b)=V$. 
+        Тогда
+        \[
+        \varphi^{-1}(U\cdot V)=\varphi^{-1}(\varphi(a)\cdot \varphi(b))=\varphi^{-1}(\varphi(a\cdot b))=a\cdot b=\varphi^{-1}(a)\cdot \varphi^{-1}(b).
+        \]
+    \end{proof}
+    \item $\varphi\colon G\to H, \psi\colon H \to K$ --- изоморфизмы. Тогда $\varphi \circ\psi$ --- изоморфизм.
+    \[
+    \begin{cases}
+        G \cong H \\ H \cong K
+    \end{cases}
+    \Rightarrow G\cong K.
+    \]
+    \begin{proof}
+        $a, b \in G$.
+        \[
+        (\underbrace{\varphi \circ \psi}_h)(a\cdot b)=\varphi(\psi(a\cdot b))=\varphi(\psi(a)\cdot \psi(b))=\varphi(\psi(a))\cdot \varphi(\psi(b))=(\underbrace{\varphi \circ \psi}_h)(a)\cdot (\underbrace{\varphi \circ \psi}_h)(b).
+        \]
+    \end{proof}
+    \item $G \cong G$.
+    \item $\varphi(e_G)=e_H$.
+    \begin{proof}
+        $a\in G$.
+        \[
+        \varphi(a)=\varphi(a\cdot e_G)=\varphi(a)\cdot \varphi(e_G).
+        \]
+        Домножим слева на $(\varphi(a))^{-1}$. Получим $e_H=\varphi(e_G)$.
+    \end{proof}
+\end{enumerate}
+
+\example{%
+$(\mathbb R, +)\cong(\mathbb R_{\underbrace{+}_{>0}}, \cdot)$. \\
+
+\begin{center}
+\begin{tikzpicture}[scale=0.6]
+    \draw[->] (-3,0) -- (3,0) node[below]{$x$};
+    \draw[->] (0,-1) -- (0,5) node[left]{$y$};
+    \draw[red, thick, domain=-2.5:2, smooth, samples=50] plot(\x, {exp(\x)});
+\end{tikzpicture}
+\end{center}
+
+\[
+e^{x+y}=e^x\cdot e^y.
+\]
+}
+
+\example{
+$\mathbb V$ --- конечномерное векторное линейное пространство над $\mathbb R$. \\
+$A\colon \mathbb V \to \mathbb V$, $A$ --- невырожденный линейный оператор.
+\[
+A(\alpha x+\beta y)=\alpha Ax+\beta Ay.
+\]
+$GL(\mathbb V)=\{A\colon \mathbb V\to\mathbb V \mid A \text{ --- невырожденный линейный оператор}\}$ --- группа относительно композиции.
+}
+
+\subsection{Операция композиции}
+\[
+(A\circ B)x=ABx.
+\]
+\begin{enumerate}
+\item $Ix=x$ --- нейтральный элемент;
+\item $(GL(\mathbb V), \circ)$ --- группа;
+\item $GL(\mathbb V)\cong GL_{\dim \mathbb V}(\mathbb R)$;
+\item $\varphi(A)$ --- матрица оператора в выбранном базисе.
+\end{enumerate}
+
+\note{
+Набор симметрий некоторого объекта образует группу.
+}
+
+\subsection{Группа симметрий}
+\[
+\operatorname{Sym}(X)=\{f\colon X\to X \mid f \text{ --- биекция, сохраняющая структуру}\}.
+\]
+\begin{enumerate}
+\item $(f\circ g)(x)=f(g(x))$ --- композиция симметрий;
+\item $e=\mathrm{id}_X$ --- нейтральный элемент;
+\item $(\operatorname{Sym}(X), \circ)$ --- группа.
+\end{enumerate}
+
+пример
+пример
+
+\section{Подгруппы}
+
+\definition{
+Пусть $G$ - группа, $H\subset G$ называется \textit{подгруппой}, если $H$ - группа с той же бинарное операцией, что и в $G$. \\
+\textit{Обозначение}: $H\leq G$ или $H<G$, если \begin{cases}
+    H \leq G \\
+    H \neq G
+\end{cases}
+.
+}
+
+\theorem[Критерий "быть подгруппой"]{
+\[
+H\leq G \iff
+\]
+\begin{enumerate}
+\setcounter{enumi}{-1}
+\item $H\neq\varnothing$;
+\item Замкнутость по умножению: $\forall a,b\in H\Rightarrow a\cdot b\in H$;
+\item Замкнутость по взятию обратного элемента: $\forall a\in H\Rightarrow a^{-1}\in H$.
+\end{enumerate}
+}
+
+\begin{proof}
+    \begin{enumerate}
+        \item[$\Longrightarrow$] \textit{Необходимость}. 
+        Если $H\leq G$, то $H$ — группа. Следовательно, все три условия выполняются по определению группы.
+        
+        \item[$\Longleftarrow$] \textit{Достаточность}. 
+        \begin{enumerate}
+            \item В $H$ есть нейтральный элемент. \[
+            \forall a\in H \exists a^{-1}\in H \colon a\cdot a^{-1}=e\in H. 
+            \]
+            
+            \item Ассоциативность операции наследуется. $\forall a,b,c \in H\subseteq G\colon$
+            \[
+            a\cdot (b\cdot c)=(a\cdot b)\cdot c.
+            \]
+            \item Обратный элемент $\forall a\in H$ существует по условию (2).
+        \end{enumerate}
+        Следовательно, $H$ — группа, значит, $H\leq G$.
+    \end{enumerate}
+\end{proof}
+
+\fact{В конечной группе условие замкнутости по умножению автоматически влечёт замкнутость по взятию обратного. Поэтому для конечного подмножества достаточно проверить только непустоту и умножение.}
+
+\note{
+Для любой группы $G$ существуют тривиальные подгруппы:
+\[
+G\leq G \quad\text{и}\quad \{e\}\leq G.
+\]
+}
+
+\example{}
+\example{}
+
+\definition{
+Рассмотрим $G$, $M\subset G$.
+\textit{Подгруппой, наименьшей по включению и содержащей $M$}, называется $\langle M \rangle=\bigcap\limits_{\substack{H\leq G \\ M \subset H}}H.$ \\
+
+Пересечение подгрупп --- подгруппа. \\
+
+Введем обозначения:
+\begin{enumerate}
+    \item $g^k=g^{k-1}\cdot g$, $k\in\mathbb N$, где $g^1=g$.
+    \item $g^0 = e$.
+    \item $g^{-k} := (g^k)^{-1}$.
+\end{enumerate}
+}
+
+\theorem[характеризация $\langle M\rangle$]{
+\[
+\langle M\rangle = \underbrace{\left\{ e\cdot g_1^{\varepsilon_1}\cdot g_2^{\varepsilon_2}\cdots g_n^{\varepsilon_n} \;\middle|\; n\in\mathbb N,\; g_i\in M,\; \varepsilon_i\in\{\pm1\} \right\}}_V.
+\]
+(\textit{Повторения $g$ разрешаются}).
+}
+\begin{proof}
+    \begin{enumerate}
+        \item Надо доказать, что $\langle M\rangle \subset V$. \\
+        Ясно, что $\forall g_i\in M\Rightarrow g_i\in V$. Докажем, что $V$ --- подгруппа. Возьмем $a,  b\in V\Rightarrow a\cdot b\in V$. Рассмотрим
+        \[
+        (eg_1^{\varepsilon_1}\cdot\dots\cdot g_n^{\varepsilon_n})^{-1}=g_n^{-\varepsilon_n}\cdot \dots \cdot g_1^{-\varepsilon_1}\cdot e^{-1}=e\cdot g_n^{-\varepsilon_n}\cdot \dots \cdot g_1^{-\varepsilon_1}\in V.
+        \]
+        Получили, что $V$ --- подгруппа в $G$ и $M\subset V$. Следовательно, $\langle M\rangle \subset V$.
+        \item  Надо доказать, что $V\subset \langle M\rangle$. \\
+        $\langle M\rangle$ --- подгруппа. Следовательно,  $\langle M\rangle$ содержит в себе всевозможные произведения своих элементов и их обратных. Откуда $V\subset \langle M\rangle$.
+    \end{enumerate}
+    Следовательно, $V=\langle M\rangle$.
+\end{proof}
+
+Пусть $G$ --- группа, $g\in G$.
+\definition{
+Подгруппа $\langle g\rangle$ называется \textit{циклической подгруппой} группы $G$.
+}
+
+\definition{
+Группа $G$ называется \textit{циклической}, если $\exists g\in G\colon \langle g\rangle = G$.
+\[
+\langle g\rangle = \{g^n \mid n\in \mathbb Z\}.
+\]
+}
+
+\example{}
+
+\section{Группа остатков}
+
+Рассмотрим множество $\mathbb{Z}_m\setminus\{0\}$ с операцией умножения по модулю $m$:
+\[
+a *_m b := a\cdot b \pmod m.
+\]
+
+Возникает вопрос: является ли $(\mathbb{Z}_m\setminus\{0\}, *)$ группой?
+
+\example{}
+
+\theorem{
+$Z_m\setminus\{0\}$, с операцией $*_m$.
+\[
+a \text{ --- имеет обратный элемент по умножению} \iff \text{НОД}(a,m)=1.
+\]
+}
+\begin{proof}
+    \begin{enumerate}
+        \item[$\Longleftarrow$] \textit{Достаточность}. 
+        Пусть $\text{НОД}(a,m)=1$. Рассмотрим линейное представление:
+        \[
+        U\cdot a+V\cdot m = 1.
+        \]
+        Получим, что $U\cdot a \equiv 1 \pmod{m} \Rightarrow U=qm+u\pmod m\Rightarrow (U\bmod m)\cdot a\equiv 1\pmod m$.\\ 
+        Следовательно, $U\bmod m$ --- обратный по умножению к $a$.
+
+        \item[$\Longrightarrow$] \textit{Необходимость}. 
+        Пусть $b$ --- обратный по умножению к $a$. Тогда
+        \[
+        a *_m b = \underbrace{ab\pmod m}_{ab=qm+1}=1,
+        \]
+        \[
+        \underbrace{b}_U a - \underbrace{q}_V m = 1.
+        \]
+        Следовательно, $\text{НОД}(a,m)=1$.
+    \end{enumerate}
+\end{proof}
 
 \end{document}
 
