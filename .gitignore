@@ -1,0 +1,12 @@
+*.aux
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.synctex.gz
+*.toc
+_minted-*
+
+# PDF-файлы намеренно не игнорируются: их добавляет GitHub Actions.
+
+
