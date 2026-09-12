@@ -4,13 +4,13 @@
 
 ## Предметы
 
-1. [Теоретическая механика](https://github.com/Tangerine232/conspects-sem3/blob/main/subjects/01-theoretical-mechanics/main.pdf)
-2. Математический анализ
-3. [Теория функций комплексной переменной](https://github.com/Tangerine232/conspects-sem3/blob/main/subjects/03-complex-analysis/main.pdf)
-4. [Теория групп и теория чисел](https://github.com/Tangerine232/conspects-sem3/blob/main/subjects/04-group-theory-number-theory/main.pdf)
-5. [Дифференциальные уравнения](https://github.com/Tangerine232/conspects-sem3/blob/main/subjects/05-differential-equations/main.pdf)
-6. [Численные методы](https://github.com/Tangerine232/conspects-sem3/blob/main/subjects/06-numerical-methods/main.pdf)
-7. [Базы данных и сетевые технологии](https://github.com/Tangerine232/conspects-sem3/blob/main/subjects/07-databases-network-technologies/main.pdf)
+1. [Теоретическая механика](https://github.com/Tangerine232/conspects-sem3/blob/main/subjects/01-theoretical-mechanics/theormech.pdf)
+2. [Математический анализ](https://github.com/Tangerine232/conspects-sem3/blob/main/subjects/02-mathematical-analysis/matan.pdf)
+3. [Теория функций комплексной переменной](https://github.com/Tangerine232/conspects-sem3/blob/main/subjects/03-complex-analysis/tfcv.pdf)
+4. [Теория групп и теория чисел](https://github.com/Tangerine232/conspects-sem3/blob/main/subjects/04-group-theory-number-theory/gtnt.pdf)
+5. [Дифференциальные уравнения](https://github.com/Tangerine232/conspects-sem3/blob/main/subjects/05-differential-equations/di_furry.pdf)
+6. [Численные методы](https://github.com/Tangerine232/conspects-sem3/blob/main/subjects/06-numerical-methods/chislaki.pdf)
+7. [Базы данных и сетевые технологии](https://github.com/Tangerine232/conspects-sem3/blob/main/subjects/07-databases-network-technologies/bdst.pdf)
 
 ## Исправления
 
