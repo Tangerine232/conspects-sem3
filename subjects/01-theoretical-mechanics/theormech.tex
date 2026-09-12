@@ -27,7 +27,7 @@
 
         {\normalsize
         \begin{tabular}{@{}rl@{}}
-            \textit{Лектор:} & ФИО лектора \\
+            \textit{Лектор:} & Потоцкая Ирина Юрьевна \\
             \textit{Конспект:} & Викторова Дарья, 25.Б03-пу
         \end{tabular}\par}
 
@@ -45,12 +45,173 @@
 
 \setcounter{lection}{0}
 
-% Пишите конспект здесь, между \begin{document} и \end{document}.
-% Например:
-% \newlection{1 сентября 2026 г.}
-% \chapter{Название главы}
-% \section{Название раздела}
-% Обычный текст и формулы: $a^2+b^2=c^2$.
+\newlection{1 сентября 2026 г.}
+
+\section*{Литература}
+\begin{enumerate}
+    \item \textbf{Бабаджанянц Л.\ К. <<Классическая механика>>. --- СПб. : Соло, 2007}.
+    \item Бухгольц Н.\ Н. <<Основной курс теоретической механики>>. В 2 т. --- М. : Наука, 1966.
+    \item Маркеев А.\ П. <<Теоретическая механика>>. --- М. : Наука, 1990.
+    \item Поляков Н.\ Н. <<Теоретическая механика>>. --- М. : Высшая школа, 1975.
+    \item Мещерский И.\ В. <<Сборник задач по теоретической механике>>. --- М. : Наука, 1970.
+    \item \textbf{Бать М.\ И., Джанелидзе Г.\ Ю., Кельзон А.\ С. <<Теоретическая механика в примерах и задачах>>. В 3 т. --- М. : Наука, 1972}.
+\end{enumerate}
+
+\medskip
+
+\textit{Цель теоретической механики} – найти закон изменения состояния объекта (зависимость состояния объекта от времени).
+
+% ============================================================
+% Схема 1: закреплённая (не плавающая)
+% ============================================================
+\begin{center}
+\begin{tikzpicture}[
+    emptybox/.style={draw=none, rectangle, thick, align=center, text width=6.0cm, inner sep=4pt, font=\normalsize},
+    mybox/.style={draw, rectangle, thick, align=center, minimum width=2.5cm, inner sep=4pt, font=\normalsize},
+    midbox/.style={draw, rectangle, thick, align=center, text width=6.0cm, inner sep=6pt, font=\normalsize},
+    bigbox/.style={draw, rectangle, thick, align=left, text width=6.0cm, inner sep=6pt, font=\normalsize},
+    arrow/.style={->, thick},
+    node distance=1.2cm
+]
+
+\node (goal) [emptybox] {Цель};
+\node (tasks) [emptybox, below=1.2cm of goal] {\underline{Задачи}};
+
+% Левая ветвь
+\node (study) [midbox, below=1.2cm of tasks, xshift=-4.5cm] 
+    {Изучение процесса движения,\\ состояния объекта};
+
+\node (chars) [bigbox, below=1.2cm of study] 
+    {Нахождение характеристик движения. \\
+    --- Кинематика (геометрическое движение) \\
+    $\bullet$ Скорость \\
+    $\bullet$ Ускорение \\
+    $\bullet$ Траектория \\
+    --- Динамика \\
+    $\bullet$ Количество движения (импульс движения) \\
+    $\bullet$ Кинетическая энергия \\
+    $\bullet$ Кинетический момент (момент количества движения) \\
+    --- Статика \\
+    $\bullet$ Равновесие систем и сил
+};
+
+% Правая ветвь
+\node (model) [mybox, below=1.2cm of tasks, xshift=4.5cm] 
+    {Составление математической модели};
+
+\node (solver) [bigbox, below=1.2cm of model] 
+    {1. Выбрать систему координат (задать координаты) \\
+    2. Составить уравнение движения относительно заданной системы координат \\
+    3. Решить уравнение движения
+};
+
+% Стрелки
+\draw[arrow] (goal) -- (tasks);
+\draw[arrow] (tasks.south) -- (study.north);
+\draw[arrow] (study) -- (chars);
+\draw[arrow] (tasks.south) -- (model.north);
+\draw[arrow] (model) -- (solver);
+
+\end{tikzpicture}
+\end{center}
+
+% ============================================================
+% Примеры математических моделей
+% ============================================================
+\subsection{Примеры математических моделей}
+
+1) Робот-пылесос
+
+% ============================================================
+% Схема 2: закреплённая (не плавающая)
+% ============================================================
+\begin{center}
+\begin{tikzpicture}[
+    scale=1.2,
+    every node/.style={font=\normalsize},
+    >=stealth,
+    thick
+]
+% Параметры
+\def\radius{2.2}
+\def\wheelwidth{0.8}
+\def\wheelheight{1.2}
+
+\coordinate (center) at (0,0);
+
+% Левое колесо
+\draw[thick] (-\radius-\wheelwidth, -\wheelheight/2) rectangle (-\radius, \wheelheight/2);
+% Правое колесо
+\draw[thick] (\radius, -\wheelheight/2) rectangle (\radius+\wheelwidth, \wheelheight/2);
+
+% Окружность
+\draw[thick] (center) circle(\radius);
+
+% Диаметр
+\draw[thin] (-\radius,0) -- (\radius,0);
+% l
+\node[below] at (0,-0.3) {$l$};
+
+% Векторы скоростей колёс
+\node[above] at (-\radius-\wheelwidth/2, \wheelheight/2+0.3) {$\vec V_L$};
+\node[above] at (\radius+\wheelwidth/2, \wheelheight/2+0.3) {$\vec V_R$};
+
+% Вектор V из центра вверх
+\draw[->, thick] (center) -- (0, \radius+1.0) node[above] {$\vec V$};
+
+% Вектор Omega
+\draw[->, thick] (0.6,0.4) arc[start angle=-20, end angle=20, radius=0.6] node[midway, right] {$\vec \Omega$};
+
+% Стрелка на правом колесе и подпись r
+\draw[<->, thick] (\radius+\wheelwidth/2, 0) -- (\radius+\wheelwidth/2, \wheelheight/2) node[midway, right] {$r$};
+
+\end{tikzpicture}
+\end{center}
+
+\medskip
+\noindent
+Введём обозначения для скоростей колёс:
+\[
+\vec V_R = r\,\vec\omega_R, \qquad \vec V_L = r\,\vec\omega_L .
+\]
+
+Тогда:
+\begin{equation}
+\left\{
+\begin{aligned}
+\vec V &= \frac{\vec V_R + \vec V_L}{2} 
+       = \frac{r(\vec\omega_R + \vec\omega_L)}{2} 
+       &&\text{— линейное движение},\\[1.2ex]
+\vec\Omega &= \frac{r(\vec\omega_R - \vec\omega_L)}{l},\quad \omega_R > \omega_L 
+       &&\text{— поворот вокруг центра масс}.
+\end{aligned}
+\right.
+\label{eq:robot}
+\end{equation}
+
+\medskip
+Рассмотрим два частных случая:
+
+\begin{enumerate}
+\item[а)] $\vec\Omega = 0 \;\Rightarrow$ движение прямо $\;\Rightarrow\; 
+   \vec\omega_R = \vec\omega_L = \vec\omega \neq 0$.  
+   Тогда линейная скорость:
+   \[
+   \vec V = \frac{r\cdot 2\vec\omega}{2} = r\vec\omega .
+   \]
+
+\item[б)] $\vec V = 0 \;\Rightarrow\; \vec\omega_R = -\vec\omega_L$.  
+   Тогда угловая скорость поворота:
+   \[
+   \vec\Omega = \frac{r(\vec\omega_R + \vec\omega_R)}{l} 
+              = \frac{2r\,\omega_R}{l}.
+   \]
+\end{enumerate}
+
+% ============================================================
+% 2) Манипулятор
+% ============================================================
+2) Манипулятор
 
 \end{document}
 
