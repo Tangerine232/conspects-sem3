@@ -2,7 +2,7 @@
 \input{../../preamble.tex}
 
 \title{Математический анализ. Неофициальный конспект}
-\author{Лектор: ФИО лектора\\
+\author{Лектор: Скопина Мария Александровна\\
 Конспект: Викторова Дарья, 25.Б03-пу}
 \date{III семестр, 2026 г.}
 
@@ -44,13 +44,508 @@
 \newpage
 
 \setcounter{lection}{0}
+\newlection{2 сентября 2026 г.}
 
-% Пишите конспект здесь, между \begin{document} и \end{document}.
-% Например:
-% \newlection{1 сентября 2026 г.}
-% \chapter{Название главы}
-% \section{Название раздела}
-% Обычный текст и формулы: $a^2+b^2=c^2$.
+\chapter{Дифференциальное исчисление функций многих переменных}
+
+\section{Многомерные пространства}
+
+\definition{
+    $\mathbb{R}^d$ --- \textit{евклидово вещественное пространство}, \\
+    $x=(x_1,\ldots,x_d)$, $x_k\in\mathbb{R}$, --- элементы евклидова вещественного пространства.
+}
+
+Введём операции:
+\[
+    x\pm y:=(x_1\pm y_1,\ldots,x_d\pm y_d),
+    \qquad
+    \alpha\in\mathbb{R}=\mathbb{R}^1\colon
+    \alpha x=(\alpha x_1,\ldots,\alpha x_d).
+\]
+
+Евклидово пространство является \textit{векторным пространством}.
+
+\subsection{Аксиомы векторного пространства}
+
+\begin{enumerate}
+    \item Коммутативность сложения: $\forall x,y\in\mathbb{R}^d\colon x+y=y+x$.
+    \item Ассоциативность сложения: $\forall x,y,z\in\mathbb{R}^d\colon (x+y)+z=x+(y+z)$.
+    \item Существование нейтрального элемента по сложению: $\exists\,\mathbb{0}\in\mathbb{R}^d\colon \forall x\in\mathbb{R}^d\colon x+\mathbb{0}=x$, $\mathbb{0}=(0,\ldots,0)$.
+    \item $\forall x\in\mathbb{R}^d\ \exists(-x)\colon x+(-x)=\mathbb{0}$.
+    \item Ассоциативность умножения на скаляр: $\alpha\cdot(\beta x)=(\alpha\beta)\cdot x$.
+    \item $(\alpha+\beta)\cdot x=\alpha x+\beta x$.
+    \item $1\cdot x=x$.
+\end{enumerate}
+
+\definition{
+    $\rho(x,y):=
+    \sqrt{(x_1-y_1)^2+\ldots+(x_d-y_d)^2}
+    =\rho(x-y,\mathbb{0})$
+    --- \textit{метрика} (\textit{расстояние}).
+}
+
+\subsection{Свойства метрики}
+
+\begin{enumerate}
+    \item $\rho(x,y)=0\iff x=y$.
+    \item $\rho(x,y)\leq\rho(x,z)+\rho(z,y)\quad \forall x,y,z\in\mathbb{R}^d$.
+
+\begin{proof}
+    \noindent
+        $\displaystyle
+        \rho^2(x,y)
+        =(x_1-y_1)^2+\ldots+(x_d-y_d)^2=$%
+
+    \noindent
+       $=((x_1-z_1)+(z_1-y_1))^2+\ldots+((x_d-z_d)+(z_d-y_d))^2=
+        $%
+
+    \noindent
+        $\displaystyle
+        =\sum_{k=1}^d (x_k-z_k)^2+\sum_{k=1}^d(z_k-y_k)^2
+        +2\sum_{k=1}^d(x_k-z_k)(z_k-y_k)\leq
+        $%
+
+    \noindent
+        $\displaystyle
+        \leq \rho^2(x,z)+\rho^2(z,y)+2\rho(x,z)\rho(z,y)
+        =(\rho(x,z)+\rho(z,y))^2.
+        $%
+
+    Проверим последнее неравенство для $d=2$. Обозначим $x_k-z_k=a_k$, $z_k-y_k=b_k$. \\
+    Надо показать, что $\displaystyle a_1b_1+a_2b_2 \leq \sqrt{a_1^2+a_2^2}\cdot \sqrt{b_1^2+b_2^2}.$%
+
+    \noindent
+        $\displaystyle
+        (a_1b_1+a_2b_2)^2
+        \leq(a_1^2+a_2^2)(b_1^2+b_2^2),$
+
+    \noindent
+        $\displaystyle
+        (a_1b_1)^2+2a_1b_1a_2b_2+(a_2b_2)^2
+        \leq a_1^2b_1^2+a_1^2b_2^2+a_2^2b_1^2+a_2^2b_2^2,$
+
+    \noindent
+        $\displaystyle
+        2a_1b_2a_2b_1
+        \leq a_1^2b_2^2+a_2^2b_1^2.$
+        
+\end{proof}
+\end{enumerate}
+
+\definition{
+    Рассмотрим $x,y\in\mathbb{R}^d$. $\langle x,y\rangle:=x_1y_1+\ldots+x_dy_d$ --- \textit{скалярное произведение}.
+}
+
+\subsection{Свойства скалярного произведения}
+
+\begin{enumerate}
+    \item $\forall x,y\in\mathbb{R}^d\colon \langle x,y\rangle=\langle y,x\rangle$.
+    \begin{proof}
+        По определению.
+    \end{proof}
+
+    \item $\forall x,x',y\in\mathbb{R}^d\colon \langle x+x',y\rangle=\langle x,y\rangle+\langle x',y\rangle$.
+    \begin{proof}
+        По определению.
+    \end{proof}
+
+    \item $\forall \lambda\in\mathbb{R},\ \forall x,y\in\mathbb{R}^d\colon \langle\lambda x,y\rangle=\langle x,\lambda y\rangle$.
+    \begin{proof}
+        По определению.
+    \end{proof}
+
+    \item $\forall x\in\mathbb{R}^d\colon \langle x,x\rangle\geq 0$.
+
+    \definition{
+        $\lVert x\rVert:=\sqrt{\langle x,x\rangle}$ --- \textit{норма}.
+    }
+
+    \item $\langle x,x\rangle=0\iff x=\mathbb{0}$.
+
+    \item $\forall x,y\in\mathbb{R}^d\colon |\langle x,y\rangle|\leq\lVert x\rVert\cdot\lVert y\rVert$.
+    \begin{proof}
+        Возьмём $\lambda\in\mathbb{R}\colon \langle\lambda x+y,\lambda x+y\rangle\geq 0$. Возьмём
+        $\displaystyle \lambda=-\frac{\langle x,y\rangle}{\lVert x\rVert^2}$. Тогда
+        \[
+        \displaystyle \lambda^2\langle x,x\rangle +2\lambda\langle x,y\rangle +\langle y,y\rangle\geq 0.
+        \]
+
+        Следовательно,
+
+        \noindent
+        $\displaystyle
+            \frac{(\langle x,y\rangle)^2}{\lVert x\rVert^2}
+            -2\frac{(\langle x,y\rangle)^2}{\lVert x\rVert^2}
+            +\langle y,y\rangle\geq 0,$
+
+        \noindent
+            $\displaystyle
+            (\langle x,y\rangle)^2
+            -\lVert x\rVert^2\lVert y\rVert^2\leq 0,
+            $
+
+        \noindent
+            $\displaystyle
+            (\langle x,y\rangle)^2
+            \leq
+            \lVert x\rVert^2\lVert y\rVert^2.
+            $
+    \end{proof}
+\end{enumerate}
+
+\proposal[1]{
+    $\forall x,y\in\mathbb{R}^d\colon
+    \lVert x+y\rVert\leq\lVert x\rVert+\lVert y\rVert$.
+}
+
+\begin{proof}
+    \[
+        \lVert x+y\rVert
+        =\sqrt{\langle x+y,x+y\rangle}
+        =\sqrt{\langle x,x\rangle+2\langle x,y\rangle+\langle y,y\rangle}
+        \leq\sqrt{\lVert x\rVert^2+2\lVert x\rVert\lVert y\rVert+\lVert y\rVert^2}=
+    \]
+    $=\lVert x\rVert+\lVert y\rVert.$
+\end{proof}
+
+\corollary{
+    $\bigl|\lVert x\rVert-\lVert y\rVert\bigr|\leq\lVert x-y\rVert$.
+}
+
+\begin{proof}
+    а) Пусть $\lVert x\rVert>\lVert y\rVert$. По Предложению 1:
+        \[ \displaystyle
+        \lVert x\rVert
+        =\lVert x-y+y\rVert
+        \leq\lVert x-y\rVert+\lVert y\rVert \Rightarrow 
+    \lVert x\rVert-\lVert y\rVert
+    \leq\lVert x-y\rVert.
+    \]
+
+    б) Пусть $\lVert x\rVert<\lVert y\rVert$. Аналогично:
+    \[
+        \displaystyle
+        \lVert y\rVert
+        =\lVert y-x+x\rVert
+        \leq\lVert y-x\rVert+\lVert x\rVert
+        =\lVert x-y\rVert+\lVert x\rVert \Rightarrow \displaystyle
+    \lVert y\rVert-\lVert x\rVert
+    \leq\lVert x-y\rVert.
+    \]
+
+    Следовательно,
+    $\displaystyle
+    \bigl|\lVert x\rVert-\lVert y\rVert\bigr|
+    \leq\lVert x-y\rVert.
+    $
+\end{proof}
+
+Пусть $x^0\in\mathbb{R}^d$, $\varepsilon>0$. Введём
+
+\numbers{
+    \item $U_\varepsilon(x^0):=
+    \{x\in\mathbb{R}^d\colon\rho(x,x^0)<\varepsilon\}$
+    --- \textit{$\varepsilon$-окрестность точки $x^0$};
+
+    \item $\mathring{U}_\varepsilon(x^0):=
+    U_\varepsilon(x^0)\setminus\{x^0\}$
+    --- \textit{проколотая $\varepsilon$-окрестность точки $x^0$}.
+}
+
+\definition{
+    Пусть $E\subset\mathbb{R}^d$, $x^0\in\mathbb{R}^d$.
+    Точка $x^0$ называется \textit{предельной точкой} множества $E$, если
+    $\forall\varepsilon>0\colon
+    E\cap\mathring{U}_\varepsilon(x^0)\neq\varnothing$.
+}
+
+Рассмотрим $\{x^{(n)}\}_{n=1}^{\infty}$ --- последовательность в $\mathbb{R}^d$.
+
+\definition{
+    Последовательность $\{x^{(n)}\}_{n=1}^{\infty}$ называется
+    \textit{сходящейся к точке} $x^0\in\mathbb{R}^d$, если
+    $\rho(x^0,x^{(n)})\xrightarrow[n\to\infty]{}0$.
+
+    \textit{Обозначение}:
+    $x^{(n)}\to x^0$ или
+    $\displaystyle\lim_{n\to\infty}x^{(n)}=x^0$.
+}
+
+\theorem[1]{
+    Для того чтобы $x^{(n)}\to x^0$, необходимо и достаточно, чтобы
+    $x_k^{(n)}\to x_k^0$ для всех $k=\overline{1,d}$.
+}
+\begin{proof}
+    \begin{enumerate}
+        \item[$\Longrightarrow$] \textit{Необходимость}. 
+        \[
+        |x_k^{(n)}-x_k^0|\leq \rho(x^{(n)},x^0)=\sqrt{(x_1^{(n)}-x_1^0)^2+\dots+(x_d^{(n)}-x_d^0)^2}.
+        \]
+        Так как $\rho(x^{(n)},x^0)\to 0$, то $|x_k^{(n)}-x_k^0|\to 0$ для каждого $k$, значит, $x_k^{(n)}\to x_k^0$.
+
+        \item[$\Longleftarrow$] \textit{Достаточность}. Надо доказать, что
+        \[
+        \rho(x^{(n)},x^0)\leq |x_1^{(n)}-x_1^0|+\dots +|x_d^{(n)}-x_d^0|.
+        \]
+        Воспользуемся методом математической индукции.
+        \begin{enumerate}
+            \item \textit{База индукции}. $d=2$.
+            \[
+            \sqrt{(x_1^{(n)}-x_1^0)^2+(x_2^{(n)}-x_2^0)^2} \leq |x_1^{(n)}-x_1^0|+|x_2^{(n)}-x_2^0|.
+            \]
+            Возведём обе части неравенства в квадрат:
+            \[
+            (x_1^{(n)}-x_1^0)^2+(x_2^{(n)}-x_2^0)^2
+            \leq (x_1^{(n)}-x_1^0)^2+(x_2^{(n)}-x_2^0)^2+2|x_1^{(n)}-x_1^0|\cdot|x_2^{(n)}-x_2^0|.
+            \]
+            База доказана.
+
+            \item $d-1\to d$. По предположению индукции:
+            \[
+            \sqrt{(x_2^{(n)}-x_2^0)^2+\dots+(x_d^{(n)}-x_d^0)^2}
+            \leq |x_2^{(n)}-x_2^0|+\dots+|x_d^{(n)}-x_d^0|.
+            \]
+            Тогда
+            \[
+            \rho(x^{(n)},x^0)\leq \sqrt{(x_1^{(n)}-x_1^0)^2+\bigl(|x_2^{(n)}-x_2^0|+\dots + |x_d^{(n)}-x_d^0|\bigr)^2}.
+            \]
+            Применив неравенство $\sqrt{a^2+b^2}\le a+b$, $a,b\ge0$, получим
+            \[
+            \rho(x^{(n)},x^0)\le |x_1^{(n)}-x_1^0|+|x_2^{(n)}-x_2^0|+\dots+|x_d^{(n)}-x_d^0|.
+            \]
+        \end{enumerate}
+    \end{enumerate}
+\end{proof}
+
+\newlection{04 сентября 2026 г.}
+
+\definition{Множество $E\subset \mathbb R^d$ называется \textit{ограниченным}, если 
+\[ \exists M > 0\colon \forall x\in E\colon \|x\|\leq M \quad (\text{или } \rho(x,\mathbb 0)\leq M). \]
+}
+
+\theorem[2]{Для любой ограниченной последовательности $\{x^{(n)}\}_{n=1}^\infty$ существует сходящаяся подпоследовательность $\{x^{(n_k)}\}_{k=1}^\infty$; \textit{обозначим} $\lim_{k\to\infty}x^{(n_k)}=a$.}
+
+\begin{proof}
+    $\|x^{(n)}\|\leq M$. \\
+    Рассмотрим $\{x_1^{(n)}\}$ --- ограниченная последовательность. Тогда $\exists \{x_1^{(n_k)}\}_{k=1}^\infty$ --- сходится. \\
+    Рассмотрим $\{x_2^{(n_k)}\}_{k=1}^\infty$ --- ограниченная последовательность. Тогда $\exists \{x_2^{(n_{k_l})}\}_{l=1}^\infty$ --- сходится. \\
+    $\dots$ \\
+    Продолжая процесс, получим, что для всех координат последовательность сходится. По теореме 1 подпоследовательности сходятся.
+\end{proof}
+
+\definition{Пусть $E\subset \mathbb R^d$, $f$ определена на $E$, $x^0$ --- предельная точка множества $E$. \\
+Говорят, что $a\in \mathbb R^d$ является \textit{пределом функции} $f$, и пишут $a=\lim_{x\to x^0}f(x)$, если $\forall\{x^{(n)}\}_{n=1}^\infty \subset E\colon \lim x^{(n)}=x^0, \forall n\colon x^{(n)}\neq x^0$, выполняется $\lim f(x^{(n)})=a$.
+
+\begin{enumerate}
+    \item $\lim_{x\to\infty} f(x)=\infty$. Это означает, что для любой последовательности $\{x^{(n)}\}$ такой, что $\lim_{n\to\infty}\|x^{(n)}\|=\infty$, выполняется $\lim_{n\to\infty} f(x^{(n)})=\infty$, то есть
+    \[
+    \forall M>0\ \exists N\colon \forall n\ge N\colon \rho(f(x^{(n)}),\mathbb 0) > M \quad (\text{или } \|f(x^{(n)})\| \ge M).
+    \]
+
+    \item $\lim_{x\to a,\ x\to\infty,\ \pm\infty} f(x)=\infty,\ \pm\infty$.
+\end{enumerate}}
+
+\definition{
+Пусть $E\subset \mathbb R^d$, $x^0\in E$, $f$ определена на $E$. \\
+Говорят, что $f$ \textit{непрерывна в точке} $x^0$, если для любой последовательности $\{x^{(n)}\}_{n=1}^\infty \subset E$ такой, что $\lim_{n\to\infty}x^{(n)}=x^0$, выполняется
+\[
+\lim_{n\to\infty} f(x^{(n)}) = f(x^0).
+\]
+}
+
+\example{
+    $d = 2$.
+    \[
+    f(x,y)=\frac{x^2y}{x^4+y^2}, \quad E=\mathbb R^2\setminus\{\mathbb 0\}.
+    \]
+    Исследуем предел функции при $(x,y)\to(0,0)$.
+
+    1) Возьмём последовательность точек $(h,0)$ при $h\to 0$. Тогда $y=0$, следовательно, $f(h,0)=0$ для всех $h\ne 0$. Значит, предел вдоль этой последовательности равен $0$.
+
+    2) Возьмём последовательность точек $(\sqrt h, h)$ при $h\to 0$. Тогда
+    \[
+    f(\sqrt h,h)=\frac{(\sqrt h)^2 h}{(\sqrt h)^4 + h^2} = \frac{h^2}{h^2 + h^2} = \frac{1}{2}.
+    \]
+    Следовательно, предел вдоль этой последовательности равен $\frac{1}{2}$.
+
+    Пределы по разным направлениям получились различными. Значит, предела функции при $(x,y)\to(0,0)$ не существует, и функцию нельзя доопределить в точке $(0,0)$ так, чтобы она была непрерывной.
+}
+
+\subsection{Свойства непрерывных функций.}
+\begin{enumerate}
+    \item $f, g$ определены на $E$, непрерывны в $x^0$. Тогда $\alpha f\pm \beta g$ непрерывна в $x^0$.
+    \begin{proof}
+        Возьмем $\{x^{(n)}\}\subset E$, $\lim_{n\to\infty}x^{(n)}=x^0$. Обозначим $h=\alpha f\pm \beta g$. \\
+        Так как $f$ и $g$ непрерывны, то
+        \[
+        \lim_{n\to\infty} f(x^{(n)})=f(x^0), \qquad
+        \lim_{n\to\infty} g(x^{(n)})=g(x^0).
+        \]
+        Следовательно,
+        \[
+        \lim_{n\to\infty} h(x^{(n)})
+        =\lim_{n\to\infty}\bigl(\alpha f(x^{(n)})\pm \beta g(x^{(n)})\bigr)
+        =\alpha f(x^0)\pm \beta g(x^0)=h(x^0).
+        \]
+        Значит, $h$ непрерывна в $x^0$.
+    \end{proof}
+
+    \item $f, g$ определены на $E$, непрерывны в $x^0$. Тогда $f\cdot g$ непрерывна в $x^0$.
+
+    \item $f, g$ определены на $E$, непрерывны в $x^0$, $x^0\in E$, $g(x^0)\neq 0$. Тогда $\frac{f}{g}$ непрерывна в $x^0$.
+
+    \item $f$ непрерывна в $x^0$, $f(x^0)>0$. Тогда $\exists \delta > 0$ такое, что $f(x) > 0$ для всех $x \in U_\delta(x^0)\cap E$.
+
+        \item Пусть $f_1, \dots, f_N$ определены и непрерывны в $x^0$; $g$ определена на $G\subset \mathbb R^N$; $y^0=(f_1(x^0),\dots,f_N(x^0))\in G$; $g$ непрерывна в $y^0$, имеет смысл суперпозиция $g(f_1,\dots ,f_N)$. Тогда $g(f_1,\dots, f_N)$ непрерывна в $x^0$.
+    \begin{proof}
+        Возьмем последовательность $\{x^{(n)}\}\subset E,\ \lim_{n\to\infty}x^{(n)}=x^0$. Тогда $\lim_{n\to\infty} f_k(x^{(n)})=f_k(x^0)$ для всех $k=\overline{1,N}$. \\
+        Обозначим $y^{(n)}=(f_1(x^{(n)}),\dots,f_N(x^{(n)}))$. Тогда $y^{(n)}\to y^0$. Так как $g$ непрерывна в $y^0$, то
+        \[
+        \lim_{n\to\infty} g(y^{(n)})=g(y^0)=g(f_1(x^0),\dots,f_N(x^0)).
+        \]
+        Следовательно, $\lim_{n\to\infty} g(f_1(x^{(n)}),\dots,f_N(x^{(n)}))=g(f_1(x^0),\dots,f_N(x^0))$, то есть суперпозиция непрерывна в $x^0$.
+    \end{proof}
+\end{enumerate}
+
+\theorem[Вейерштрасса]{Пусть $K$ --- компакт, $f$ непрерывна на $K$. \\
+Тогда $f$ ограничена на $K$ и достигает своих наибольшего и наименьшего значений.
+}
+\begin{proof}
+    \begin{enumerate}
+        \item Докажем ограниченность. Предположим противное: $f$ не ограничена. Тогда $m=\sup\limits_{x\in K}|f(x)|$.
+
+        \begin{enumerate}
+            \item $m = \infty$.
+            \[
+            \forall M>0\ \exists x=x(M)\colon |f(x)|\geq M.
+            \]
+            Возьмём точки $x^{(n)}\colon |f(x^{(n)})|>n$. \\
+            Рассмотрим $\{x^{(n)}\}$ --- ограничена. Следовательно, покоординатные последовательности $\{x_l^{(n)}\}$ ограничены. \\
+            Рассмотрим $\{x_1^{(n)}\}$ --- ограничена. Следовательно, $\exists$ подпоследовательность $\{x^{(n_k)}\}$ такая, что $x_1^{(n_k)}$ сходится, то есть $\lim\limits_{k\to\infty} x_1^{(n_k)}=x_1^0$. \\
+            Рассмотрим $\{x_2^{(n_k)}\}$ --- ограничена. Значит, $\exists$ подпоследовательность $\{x^{(n_{k_l})}\}$ такая, что $x_2^{(n_{k_l})}$ сходится. При этом
+            \[
+            \begin{cases}
+               \lim\limits_{l\to\infty} x_2^{(n_{k_l})}=x_2^0,\\
+               \lim\limits_{l\to\infty} x_1^{(n_{k_l})}=x_1^0.
+            \end{cases}
+            \]
+            $\dots$ \\
+            Продолжая этот процесс, получим, что для подпоследовательности $\{x^{(n_{k_l})}\}$ все координаты сходятся, то есть $x^{(n_{k_l})}\to x^0\in K$ (в силу компактности). \\
+            
+            Тогда для этой подпоследовательности $|f(x^{(n_{k_l})})|>n_{k_l}\to\infty$, то есть $\lim\limits_{l\to\infty} |f(x^{(n_{k_l})})| = \infty$. \\
+            В силу непрерывности $f$ в точке $x^0$ имеем $\lim\limits_{l\to\infty} f(x^{(n_{k_l})}) = f(x^0)$. \\
+            
+            Следовательно, $\lim\limits_{l\to\infty} |f(x^{(n_{k_l})})| = |f(x^0)|$,
+            что является конечным числом.
+        \end{enumerate}
+
+        Получили противоречие. Следовательно, $|m|<\infty$, то есть $f$ ограничена.
+
+        \item Докажем достижение максимума. Пусть $m=\sup\limits_{x\in K} f(x)$. Будем считать, что $m>0$. По определению супремума
+        \[
+        \forall \varepsilon>0\ \exists x=x(\varepsilon)\in K\colon f(x)>m-\varepsilon.
+        \]
+        Полагая $\varepsilon=\frac1n$, получим $\forall n\in\mathbb N$ точку $x^{(n)}\in K \colon f(x^{(n)})>m-\frac1n$. \\
+        
+        Возьмем подпоследовательность $\{x^{(n_k)}\}$ --- сходится, $\lim\limits_{k\to\infty} x^{(n_k)}=x^0$. Тогда в силу непрерывности $f$ имеем $\lim\limits_{k\to\infty} f(x^{(n_k)})=f(x^0)$. \\
+        С другой стороны, из неравенства $m-\frac{1}{n_k}\le f(x^{(n_k)})<m$ следует, что $f(x^{(n_k)})\to m$. Следовательно, $f(x^0)=m$, то есть максимум достигается. \\
+
+        Аналогично для $m<0$ получим, что существует точка, в которой достигается минимум.
+    \end{enumerate}
+    
+    Таким образом, $f$ ограничена на $K$ и достигает своих наибольшего и наименьшего значений.
+\end{proof}
+
+\definition{
+$\{x^{(n)}\}$ \textit{равномерно сходится к точке} $x^0$, если $\forall\varepsilon>0\ \exists\delta >0\colon \forall n, n'\colon \rho(x^{(n)},x^{(n')})<\delta$, выполняется
+\[
+\rho(f(x^{(n)}),f(x^{(n')}))<\varepsilon.
+\]
+}
+
+\theorem[Кантора]{Пусть $f\in C(K)$, $K$ --- компакт. \\
+Тогда $f$ равномерно непрерывна на $K$.}
+\begin{proof}
+    От противного. Пусть равномерная непрерывность отсутствует. Тогда
+    \[
+    \exists\varepsilon_0>0\colon \forall\delta>0\ \exists x,y\in K\colon \rho(x,y)<\delta,\ \text{ выполняется } |f(x)-f(y)|\ge \varepsilon_0.
+    \]
+    Возьмём $\delta_n=\frac{1}{n}$. Тогда $\forall n\exists x^{(n)},y^{(n)}\in K \colon \rho(x^{(n)},y^{(n)})<\frac{1}{n}$, выполняется
+    \[ 
+    |f(x^{(n)})-f(y^{(n)})|\ge \varepsilon_0.
+    \]
+    
+    Так как $K$ компактно, из последовательности $\{x^{(n)}\}$ можно выделить сходящуюся подпоследовательность $\{x^{(n_k)}\}$: $\lim\limits_{k\to\infty} x^{(n_k)}=x^0\in K$. \\
+    Из последовательности $\{y^{(n_k)}\}$ выделим сходящуюся подпоследовательность $\{y^{(n_{k_l})}\}$: $\lim\limits_{l\to\infty} y^{(n_{k_l})}=y^0\in K$. \\
+    
+    Зафиксируем $\varepsilon>0$. В силу сходимости найдётся номер $L\colon \forall l\ge L$:
+    \[
+    \rho(x^{(n_{k_l})},x^0)<\frac{\varepsilon}{3},\qquad
+    \rho(y^{(n_{k_l})},y^0)<\frac{\varepsilon}{3},\qquad
+    \frac{1}{n_{k_l}}<\frac{\varepsilon}{3}.
+    \]
+    Тогда
+    \[
+    \rho(x^0,y^0)\le \rho(x^0,x^{(n_{k_l})})+\rho(x^{(n_{k_l})},y^{(n_{k_l})})+\rho(y^{(n_{k_l})},y^0)<
+    \frac{\varepsilon}{3}+\frac{1}{n_{k_l}}+\frac{\varepsilon}{3}<\varepsilon.
+    \]
+    
+    Так как $\varepsilon>0$ произвольно, то $x^0=y^0$. В силу непрерывности $f$ получим
+    \[
+    \lim_{l\to\infty} f(x^{(n_{k_l})})=\lim_{l\to\infty} f(y^{(n_{k_l})})=f(x^0).
+    \]
+    Следовательно, $\lim_{l\to\infty} |f(x^{(n_{k_l})})-f(y^{(n_{k_l})})|=0$. Значит, $\exists L^*\colon \forall l\ge L^*$ выполнено 
+    \[ 
+    |f(x^{(n_{k_l})})-f(y^{(n_{k_l})})|<\varepsilon_0.
+    \]
+    По построению $\forall l\colon |f(x^{(n_{k_l})})-f(y^{(n_{k_l})})|\ge \varepsilon_0$. Противоречие.
+\end{proof}
+
+\newlection{9 сентября 2026 г.}
+
+\definition{
+Пусть $f$ определена в точке $x^0\in E$. \\
+Тогда $f$ \textit{непрерывна в точке} $x^0$, если
+\[
+\lim_{x\to x^0}f(x)=f(x^0).
+\]
+}
+
+\definition{
+Пусть $E\subset\mathbb R^d$, $f\colon E\to\mathbb R$, и $x^0$ --- предельная точка множества $E$. \\
+Будем говорить, что $A=\lim\limits_{x\to x^0}f(x)$, если
+\[
+\forall \varepsilon>0\ \exists \delta>0\colon \forall x\in E\cap\mathring{U}_\delta(x^0),\ \text{выполняется}\ |f(x)-A|<\varepsilon,
+\]
+}
+
+\theorem[5]{
+Пусть $f$ определена на $E\subset \mathbb R^d$, $A\in \mathbb R$, $x^0$ --- предельная точка множества $E$. \\
+Для того чтобы $\lim_{x\to x^0}f(x)=A$, необходимо и достаточно, чтобы для любой последовательности $\{x^{(n)}\}\colon x^{(n)}\to x^0$ выполнялось $f(x^{(n)})\to A$.
+}
+\begin{proof}
+    \begin{enumerate}
+        \item[$\Longrightarrow$] \textit{Необходимость.} Пусть $\lim_{x\to x^0}f(x)=A$. Тогда
+        \[
+        \forall \varepsilon>0\ \exists \delta>0\colon \forall x\in \mathring{U}_\delta(x^0),\ |f(x)-A|<\varepsilon.
+        \]
+        Возьмём последовательность $\{x^{(n)}\}\colon x^{(n)}\to x^0$. Тогда для данного $\delta$ найдётся номер $N\colon \forall n\ge N$ выполнено $\rho(x^{(n)},x^0)<\delta$, то есть $x^{(n)}\in \mathring{U}_\delta(x^0)$. \\
+        Следовательно, $|f(x^{(n)})-A|<\varepsilon$.
+
+       \item[$\Longleftarrow$] \textit{Достаточность}. Предположим, что для любой последовательности $\{x^{(n)}\}\colon x^{(n)}\to x^0$ выполняется $f(x^{(n)})\to A$. Докажем, что $\lim_{x\to x^0}f(x)=A$. \\
+        Допустим противное:
+        \[
+        \exists \varepsilon_0>0\colon \forall \delta>0\ \exists x\in \mathring{U}_\delta(x^0),\ |f(x)-A|\ge \varepsilon_0.
+        \]
+        Положим $\delta_n=\frac1n$. Обозначим $y^{(n)}:=x(\delta_n)$. Тогда $\rho(y^{(n)},x^0)<\frac1n\to0$, значит, $y^{(n)}\to x^0$. \\
+        По построению $|f(y^{(n)})-A|\ge \varepsilon_0$, что противоречит предположению о том, что для любой последовательности, сходящейся к $x^0$, значения функции сходятся к $A$.
+    \end{enumerate}
+\end{proof}
+
+
+
+\end{document}
 
 \end{document}
 
