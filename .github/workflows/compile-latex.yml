@@ -63,11 +63,9 @@ jobs:
       - name: Commit rebuilt PDFs
         if: github.event_name == 'push'
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.name "actions-user"
+          git config user.email "actions-user@users.noreply.github.com"
           git add 'subjects/**/*.pdf'
           git diff --cached --quiet && exit 0
           git commit -m "Rebuild lecture PDFs"
           git push
-
-
