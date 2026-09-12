@@ -1,0 +1,45 @@
+name: Replace legacy action commit author
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/rewrite-action-author.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  rewrite:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout full history
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Replace author and remove this migration
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          git filter-branch -f --env-filter '
+          if [ "$GIT_AUTHOR_EMAIL" = "41898282+github-actions[bot]@users.noreply.github.com" ]; then
+              export GIT_AUTHOR_NAME="actions-user"
+              export GIT_AUTHOR_EMAIL="65916846+actions-user@users.noreply.github.com"
+          fi
+          if [ "$GIT_COMMITTER_EMAIL" = "41898282+github-actions[bot]@users.noreply.github.com" ]; then
+              export GIT_COMMITTER_NAME="actions-user"
+              export GIT_COMMITTER_EMAIL="65916846+actions-user@users.noreply.github.com"
+          fi
+          ' -- HEAD
+
+          git push --force origin HEAD:main
+
+          git config user.name "actions-user"
+          git config user.email "65916846+actions-user@users.noreply.github.com"
+          git rm .github/workflows/rewrite-action-author.yml
+          git commit -m "Remove one-time history migration"
+          git push origin HEAD:main
+
