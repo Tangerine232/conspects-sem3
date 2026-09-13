@@ -248,14 +248,16 @@
 % Дополнительные команды
 % ============================================================
 \usepackage{empheq}      % для \encircle
-\usepackage{changepage}  % для \indent
+\usepackage{changepage}  % для \blockindent
 
 % Леммы
 \newtheorem{lemma_env}{Лемма}[section]
 \newcommand{\lemma}[2][]{\begin{lemma_env}[#1]#2\end{lemma_env}}
 
-% Отступ
-\renewcommand{\indent}[1]{\begin{adjustwidth}{1.5cm}{}#1\end{adjustwidth}}
+% Отступ (переименовано из \indent, чтобы не ломать ядро LaTeX)
+\newcommand{\blockindent}[1]{%
+  \begin{adjustwidth}{1.5cm}{}#1\end{adjustwidth}%
+}
 
 % Одностраничные блоки
 \newcommand{\singlepage}[1]{\begin{samepage}#1\end{samepage}}
@@ -273,7 +275,7 @@
 \newcommand{\angles}[1]{\left\langle#1\right\rangle}
 \newcommand{\der}[2]{\frac{\partial #1}{\partial #2}}
 \DeclareMathOperator{\differential}{d}
-\renewcommand{\d}{\differential\!}
+\newcommand{\dif}{\differential\!}
 \newcommand{\fmax}{\lor}
 \newcommand{\fmin}{\land}
 \DeclareMathOperator*{\esssup}{ess\,sup}
@@ -284,7 +286,7 @@
 \newcommand{\circlesign}[1]{\mathrel{\tikz[baseline=-0.5ex]{\node[draw, circle, inner sep=1pt] (char) {\vphantom{$-$}$#1$};}}}
 
 % Дополнительные команды для доказательств
-\newcommand{\indentlemma}[3][]{\indent{\lemma[#1]{#2\prove[Доказательство леммы]{#3}}}}
+\newcommand{\indentlemma}[3][]{\blockindent{\lemma[#1]{#2\prove[Доказательство леммы]{#3}}}}
 \newcommand{\prove}[2][Доказательство]{\begin{proof}[#1]#2\end{proof}}
 
 % ============================================================
