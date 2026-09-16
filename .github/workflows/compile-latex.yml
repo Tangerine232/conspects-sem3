@@ -1,0 +1,72 @@
+name: Compile LaTeX to PDF
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "subjects/**/*.tex"
+      - "preamble.tex"
+      - ".github/workflows/compile-latex.yml"
+  pull_request:
+    branches: [main]
+    paths:
+      - "subjects/**/*.tex"
+      - "preamble.tex"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: latex-pdf-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install LaTeX
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            latexmk \
+            texlive-lang-cyrillic \
+            texlive-latex-extra \
+            texlive-fonts-extra \
+            texlive-pictures \
+            texlive-science
+
+      - name: Compile every subject
+        shell: bash
+        run: |
+          set -euo pipefail
+          while IFS= read -r -d '' file; do
+            directory="$(dirname "$file")"
+            filename="$(basename "$file")"
+            (
+              cd "$directory"
+              latexmk -pdf -interaction=nonstopmode -halt-on-error "$filename"
+              latexmk -c "$filename"
+            )
+          done < <(find subjects -type f -name '*.tex' -print0 | sort -z)
+
+      - name: Upload PDFs for pull requests
+        if: github.event_name == 'pull_request'
+        uses: actions/upload-artifact@v4
+        with:
+          name: compiled-conspects
+          path: subjects/**/*.pdf
+
+      - name: Commit rebuilt PDFs
+        if: github.event_name == 'push'
+        run: |
+          git config user.name "actions-user"
+          git config user.email "65916846+actions-user@users.noreply.github.com"
+          git add 'subjects/**/*.pdf'
+          git diff --cached --quiet && exit 0
+          git commit -m "Rebuild lecture PDFs"
+          git push
+

@@ -1,0 +1,452 @@
+% Общая преамбула. Подключается из subject/main.tex после \documentclass.
+
+% ============================================================
+% Базовые шрифты и кодировка
+% ============================================================
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[russian]{babel}
+
+\renewcommand{\rmdefault}{cmr}
+\renewcommand{\sfdefault}{cmss}
+\renewcommand{\ttdefault}{cmtt}
+\renewcommand{\familydefault}{\rmdefault}
+
+% ============================================================
+% Математика и базовое оформление
+% ============================================================
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{mathrsfs}
+\usepackage{bbold}
+\usepackage{enumitem}
+\usepackage{xparse}
+\usepackage{xcolor}
+\usepackage{microtype}
+\usepackage{geometry}          % для настройки полей
+\usepackage{parskip}           % для расстояний между абзацами (без параметров)
+\usepackage{hyperref}
+\usepackage[nameinlink,noabbrev]{cleveref}
+\usepackage{tikz}
+\usetikzlibrary{
+    positioning,
+    arrows.meta,
+    calc,
+    intersections,
+    patterns,
+    shapes.geometric,
+    decorations.markings,
+    matrix,
+    fit,
+    backgrounds
+}
+
+% ============================================================
+% Рисунки, графики, схемы, таблицы и фрагменты кода
+% ============================================================
+\usepackage{graphicx}      % изображения
+\usepackage{float}         % точное размещение рисунков/таблиц через [H]
+\usepackage{caption}       % подписи к рисункам и таблицам
+\usepackage{subcaption}    % несколько рисунков внутри одной фигуры
+\usepackage{wrapfig}       % обтекание рисунков текстом
+\usepackage{pgfplots}      % графики функций и численных данных
+\pgfplotsset{compat=1.18}
+\usepackage{tikz-cd}       % коммутативные диаграммы
+
+\usepackage{booktabs}      % аккуратные таблицы
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{longtable}
+\usepackage{multirow}
+
+\usepackage{listings}      % код: C/C++/Python/SQL и др.
+
+% Дополнительная математика
+\usepackage{bm}            % жирные математические символы: \bm{x}
+\usepackage{bbm}           % красивый blackboard bold для цифр: \mathbbm{0}, \mathbbm{1}
+\usepackage{esint}         % \oiint, \varoiint и другие интегралы
+\usepackage{cancel}        % \cancel{}, \bcancel{}, \xcancel{}
+
+% ============================================================
+% Отступы и расстояния
+% ============================================================
+\geometry{a4paper,top=2cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm}
+% parskip уже загружен без параметров, что даёт нулевой отступ первой строки
+% и положительный межстрочный интервал между абзацами.
+
+\setlength{\emergencystretch}{3em}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    urlcolor=black,
+    citecolor=black,
+    linktoc=all
+}
+
+% ============================================================
+% Доказательства
+% ============================================================
+\addto\captionsrussian{%
+    \renewcommand{\proofname}{Доказательство}%
+}
+
+\makeatletter
+\renewenvironment{proof}[1][\proofname]{%
+    \par
+    \begingroup
+    \leftskip=\dimexpr-\@totalleftmargin\relax
+    \rightskip=0pt
+    \parindent=0pt
+    \noindent\textit{\underline{#1.}}\par\nobreak
+    \noindent\ignorespaces
+}{%
+    \unskip\nobreak\hspace{0.15em}\ensuremath{\blacksquare}%
+    \par
+    \endgroup
+}
+\makeatother
+
+% ============================================================
+% Заголовки
+% ============================================================
+\usepackage{titlesec}
+\titleclass{\chapter}{straight}
+
+\titleformat{\chapter}[display]
+  {\normalfont\huge\bfseries\raggedright}
+  {\chaptername\ \thechapter}
+  {0.7em}
+  {\Huge\raggedright}
+
+\titleformat{\section}
+  {\normalfont\Large\bfseries}
+  {\thesection}{0.7em}{}
+
+\titleformat{\subsection}
+  {\normalfont\large\bfseries}
+  {\thesubsection}{0.7em}{}
+
+\titleformat{\subsubsection}
+  {\normalfont\normalsize\bfseries}
+  {\thesubsubsection}{0.7em}{}
+
+\titlespacing*{\chapter}{0pt}{0.45em}{0.45em}
+\titlespacing*{\section}{0pt}{0.55em}{0.25em}
+\titlespacing*{\subsection}{0pt}{0.45em}{0.18em}
+\titlespacing*{\subsubsection}{0pt}{0.35em}{0.15em}
+
+% ============================================================
+% Лекции
+% ============================================================
+\newcounter{lection}
+\NewDocumentCommand{\newlection}{m}{%
+    \refstepcounter{lection}%
+    \par\smallskip
+    {\centering\color{gray!70}\normalsize Лекция \thelection. #1\par}
+    \vspace{0.1em}
+}
+
+% ============================================================
+% Теоремы, определения, замечания
+% ============================================================
+\makeatletter
+\NewDocumentCommand{\definition}{o +m}{%
+    \par
+    \noindent
+    \ifdim\@totalleftmargin>0pt
+        \hspace*{\dimexpr-\@totalleftmargin\relax}%
+    \fi
+    \textbf{Определение\IfValueT{#1}{ (#1)}.}~#2
+    \par
+}
+\makeatother
+
+\ExplSyntaxOn
+
+\NewDocumentCommand{\theorem}{o +m}{%
+    \par\noindent
+    \textbf{%
+        Теорема
+        \IfValueT{#1}{%
+            \regex_match:nnTF { \A \d+ \Z } { #1 }
+                {~#1}
+                {~(#1)}
+        }%
+        .
+    }~#2
+    \par
+}
+
+\ExplSyntaxOff
+
+\NewDocumentCommand{\proposal}{o +m}{%
+    \par\noindent
+    \textbf{Предложение\IfValueT{#1}{~#1}.}~#2
+    \par
+}
+
+\NewDocumentCommand{\fact}{o +m}{%
+    \par\noindent
+    \textit{Факт\IfValueT{#1}{ (#1)}.}~#2
+    \par
+}
+
+\NewDocumentCommand{\question}{+m}{%
+    \par\noindent
+    \textbf{Вопрос.}~#1
+    \par
+}
+
+\NewDocumentCommand{\note}{+m}{%
+    \par\noindent
+    \textbf{Замечание.}~#1
+    \par
+}
+
+\NewDocumentCommand{\corollary}{o +m}{%
+    \par\noindent
+    \textbf{Следствие\IfValueT{#1}{~#1}.}~#2
+    \par
+}
+
+\NewDocumentCommand{\example}{+m}{%
+    \par\noindent
+    \textbf{Пример.}~#1
+    \par
+}
+
+% ============================================================
+% Списки
+% ============================================================
+\NewDocumentCommand{\numbers}{+m}{%
+    \begin{enumerate}[leftmargin=2em,itemsep=0.25em,topsep=0.3em]
+    #1
+    \end{enumerate}
+}
+
+\NewDocumentCommand{\bullets}{+m}{%
+    \begin{itemize}[leftmargin=2em,itemsep=0.25em,topsep=0.3em]
+    #1
+    \end{itemize}
+}
+
+\NewDocumentCommand{\provehere}{+m}{%
+    \par\smallskip
+    \begin{proof}#1\end{proof}
+}
+
+\NewDocumentCommand{\provewthen}{m +m}{%
+    \par\smallskip
+    \begin{proof}[#1]#2\end{proof}
+}
+
+\NewDocumentCommand{\provebullets}{+m}{%
+    \begin{proof}
+    \begin{itemize}[leftmargin=2em,itemsep=0.25em,topsep=0.3em]
+    #1
+    \end{itemize}
+    \end{proof}
+}
+
+\NewDocumentCommand{\provenumbers}{+m}{%
+    \begin{proof}
+    \begin{enumerate}[leftmargin=2em,itemsep=0.25em,topsep=0.3em]
+    #1
+    \end{enumerate}
+    \end{proof}
+}
+
+% ============================================================
+% Дополнительные команды
+% ============================================================
+\usepackage{empheq}      % для \encircle
+\usepackage{changepage}  % для \blockindent
+
+% Леммы
+\newtheorem{lemma_env}{Лемма}[section]
+\newcommand{\lemma}[2][]{\begin{lemma_env}[#1]#2\end{lemma_env}}
+
+% Отступ (переименовано из \indent, чтобы не ломать ядро LaTeX)
+\newcommand{\blockindent}[1]{%
+  \begin{adjustwidth}{1.5cm}{}#1\end{adjustwidth}%
+}
+
+% Одностраничные блоки
+\newcommand{\singlepage}[1]{\begin{samepage}#1\end{samepage}}
+
+% Сборки формул
+\renewcommand{\gather}[1]{\begin{gather*}#1\end{gather*}}
+\renewcommand{\multline}[1]{\begin{multline*}#1\end{multline*}}
+
+% Обрамлённые формулы
+\newcommand{\encircle}[1]{\begin{empheq}[box=\fbox]{align*}#1\end{empheq}}
+
+% Математические операторы и символы
+\newcommand{\proddots}{\cdot\ldots\cdot}
+\newcommand{\abs}[1]{\left|#1\right|}
+\newcommand{\angles}[1]{\left\langle#1\right\rangle}
+\newcommand{\der}[2]{\frac{\partial #1}{\partial #2}}
+\DeclareMathOperator{\differential}{d}
+\newcommand{\dif}{\differential\!}
+\newcommand{\fmax}{\lor}
+\newcommand{\fmin}{\land}
+\DeclareMathOperator*{\esssup}{ess\,sup}
+\DeclareMathOperator*{\essssup}{ess\,sup}
+\DeclareMathOperator*{\esssssup}{ess\,sup}
+\newcommand{\Map}{\longrightarrow}
+\newcommand{\almost}[1]{\underset{#1}{\overset{\textup{почти всюду}}\Map}}
+\newcommand{\circlesign}[1]{\mathrel{\tikz[baseline=-0.5ex]{\node[draw, circle, inner sep=1pt] (char) {\vphantom{$-$}$#1$};}}}
+
+% Дополнительные команды для доказательств
+\newcommand{\indentlemma}[3][]{\blockindent{\lemma[#1]{#2\prove[Доказательство леммы]{#3}}}}
+\newcommand{\prove}[2][Доказательство]{\begin{proof}[#1]#2\end{proof}}
+
+% ============================================================
+% Часто используемые математические обозначения
+% ============================================================
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\renewcommand{\C}{\mathbb{C}}
+\newcommand{\Ord}{\mathrm{Ord}}
+\newcommand{\Card}{\mathrm{Card}}
+
+\renewcommand{\o}{\varnothing}
+\newcommand{\bs}{\setminus}
+\newcommand{\inv}{^{\complement}}
+\newcommand{\then}{\Rightarrow}
+\newcommand{\map}{\to}
+\newcommand{\bydef}{\coloneqq}
+\newcommand{\all}[1]{\left\{\begin{aligned}#1\end{aligned}\right.}
+\newcommand{\any}[1]{\left[\begin{aligned}#1\end{aligned}\right.}
+\newcommand{\exist}{\exists}
+\newcommand{\dom}{\operatorname{dom}}
+\newcommand{\rng}{\operatorname{rng}}
+\newcommand{\defset}[2]{\left\{#1\;\middle|\;#2\right\}}
+\newcommand{\switch}[1]{\left\{\begin{aligned}#1\end{aligned}\right.}
+
+% ------------------------------------------------------------
+% Большие операторы: индексы автоматически ставятся сверху/снизу
+% ------------------------------------------------------------
+\let\oldlim\lim
+\renewcommand{\lim}{\oldlim\limits}
+\let\oldsup\sup
+\renewcommand{\sup}{\oldsup\limits}
+\let\oldinf\inf
+\renewcommand{\inf}{\oldinf\limits}
+\let\oldmax\max
+\renewcommand{\max}{\oldmax\limits}
+\let\oldmin\min
+\renewcommand{\min}{\oldmin\limits}
+
+\let\oldsum\sum
+\renewcommand{\sum}{\oldsum\limits}
+\let\oldprod\prod
+\renewcommand{\prod}{\oldprod\limits}
+\let\oldcoprod\coprod
+\renewcommand{\coprod}{\oldcoprod\limits}
+
+\let\oldbigcap\bigcap
+\renewcommand{\bigcap}{\oldbigcap\limits}
+\let\oldbigcup\bigcup
+\renewcommand{\bigcup}{\oldbigcup\limits}
+\let\oldbigsqcup\bigsqcup
+\renewcommand{\bigsqcup}{\oldbigsqcup\limits}
+
+\let\oldbigvee\bigvee
+\renewcommand{\bigvee}{\oldbigvee\limits}
+\let\oldbigwedge\bigwedge
+\renewcommand{\bigwedge}{\oldbigwedge\limits}
+\let\oldbigoplus\bigoplus
+\renewcommand{\bigoplus}{\oldbigoplus\limits}
+\let\oldbigotimes\bigotimes
+\renewcommand{\bigotimes}{\oldbigotimes\limits}
+\let\oldbigodot\bigodot
+\renewcommand{\bigodot}{\oldbigodot\limits}
+\let\oldbiguplus\biguplus
+\renewcommand{\biguplus}{\oldbiguplus\limits}
+
+% Красивые blackboard-bold цифры (\mathbb не во всех шрифтах содержит цифры)
+\newcommand{\bbzero}{\mathbbm{0}}
+\newcommand{\bbone}{\mathbbm{1}}
+
+% Универсальные обозначения для разных курсов
+\newcommand{\norm}[1]{\left\lVert #1 \right\rVert}
+\newcommand{\floor}[1]{\left\lfloor #1 \right\rfloor}
+\newcommand{\ceil}[1]{\left\lceil #1 \right\rceil}
+\newcommand{\paren}[1]{\left( #1 \right)}
+\newcommand{\brackets}[1]{\left[ #1 \right]}
+\newcommand{\set}[1]{\left\{ #1 \right\}}
+\newcommand{\conj}[1]{\overline{#1}}
+\newcommand{\vect}[1]{\bm{#1}}
+
+\DeclareMathOperator{\RePart}{Re}
+\DeclareMathOperator{\ImPart}{Im}
+\DeclareMathOperator{\Arg}{Arg}
+\DeclareMathOperator{\Ker}{Ker}
+\DeclareMathOperator{\Image}{Im}
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\sgn}{sgn}
+\DeclareMathOperator{\lcm}{lcm}
+\DeclareMathOperator{\Span}{span}
+
+% Differential notation in math; preserve the text dot-below accent.
+\let\textdotbelow\d
+\DeclareRobustCommand{\d}{\ifmmode\mathrm{d}\else\expandafter\textdotbelow\fi}
+
+\endinput
+
+% Всё ниже оставлено из исходного файла как справочный образец титульной
+% страницы и LaTeX не читает после команды \endinput.
+% ============================================================
+% Информация о документе и титульная страница
+% ============================================================
+\date{III семестр, 2026 г.}
+\title{Название предмета. Неофициальный конспект}
+\author{Лектор: ФИО лектора\\
+Конспект: Викторова Дарья, 25.Б03-пу}
+
+\begin{document}
+
+\begin{titlepage}
+    \thispagestyle{empty}
+    \begin{center}
+        \vspace*{0.6cm}
+
+        {\large Санкт-Петербургский государственный университет\par}
+        \vspace{0.35em}
+        {\normalsize Факультет прикладной математики~--- процессов управления\par}
+
+        \vspace*{5.1cm}
+
+        {\fontsize{30}{35}\selectfont\bfseries Название предмета\par}
+        \vspace{0.65em}
+        {\fontsize{17}{21}\selectfont\itshape Неофициальный конспект\par}
+
+        \vspace{2.7cm}
+
+        {\normalsize
+        \begin{tabular}{@{}rl@{}}
+            \textit{Лектор:} & ФИО лектора \\
+            \textit{Конспект:} & Викторова Дарья, 25.Б03-пу
+        \end{tabular}\par}
+
+        \vfill
+
+        {\large III семестр\par}
+        \vspace{0.22em}
+        {\large 2026 год\par}
+        \vspace*{0.55cm}
+    \end{center}
+\end{titlepage}
+
+\tableofcontents
+\newpage
+
+\setcounter{lection}{0}
+\newlection{Число Месяц 2026 г.}
+
+\end{document}
+
