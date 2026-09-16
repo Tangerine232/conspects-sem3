@@ -561,6 +561,151 @@ f(x)>c(<c).
     Аналогично для $f(x^0)<c$.
 \end{proof}
 
+\theorem[6]{
+Пусть $\varphi_1,\dots,\varphi_N$ определены на $E\subset \mathbb R^d$ и непрерывны в точке $x^0\in E$; $f$ определена на $F\subset \mathbb R^N$ и непрерывна в точке $y^0:=(\varphi_1(x^0),\dots,\varphi_N(x^0))$; имеет смысл суперпозиция $f(\varphi_1,\dots,\varphi_N)$; 
+Тогда
+\[
+f(\varphi_1,\dots,\varphi_N) \ \text{непрерывна в} \ x^0.
+\]
+}
+
+\begin{proof}
+    Зададим $\varepsilon>0$. Тогда $\exists \delta >0\colon \forall y\in U_\delta(y^0)\cap F$ выполняется
+    \[
+    |f(y)-f(y^0)|<\varepsilon.
+    \]
+    Рассмотрим $\delta$. $\exists \lambda >0\colon \forall x\in U_\lambda(x^0)\cap E\colon$
+    \[
+    |\varphi_l(x)-\varphi_l(x^0)|<\frac{\delta}{\sqrt N}
+    \quad \forall l=\overline{1,N}.
+    \]
+    Пусть $y(x)=(\varphi_1(x),\dots,\varphi_N(x))\in\mathbb R^N$.
+    Тогда
+    \[
+    \rho(y(x),y^0)
+    =
+    \sqrt{\sum_{l=1}^N
+    (\varphi_l(x)-\varphi_l(x^0))^2}
+    <
+    \sqrt{\sum_{l=1}^N\frac{\delta^2}{N}}
+    =
+    \delta.
+    \]
+    Следовательно, $\forall \varepsilon>0\ \exists \lambda >0\colon \forall x\in U_\lambda(x^0)\cap E$ выполняется
+    \[
+    |f(\varphi_1(x),\dots,\varphi_N(x))
+    -f(\varphi_1(x^0),\dots,\varphi_N(x^0))|
+    <\varepsilon.
+    \]
+    Следовательно, функция $f(\varphi_1,\dots,\varphi_N)$ непрерывна в точке $x^0$.
+\end{proof}
+
+\definition{
+$\gamma$ называется \textit{кривой в} $\mathbb R^d$, если
+\[
+\gamma=
+\left\{
+x=(\varphi_1(t),\dots,\varphi_d(t))\in\mathbb R^d
+\ \middle|\ 
+t\in[\alpha,\beta]
+\right\},
+\]
+где $\varphi_l$ --- непрерывные функции на некотором отрезке $[\alpha,\beta]$, то есть
+\[
+\varphi_l\colon[\alpha,\beta]\to\mathbb R,
+\qquad l=\overline{1,d}.
+\]
+}
+
+\definition{
+$G\subset\mathbb R^d$ называется \textit{областью}, если $G$ открыто и
+\[
+\forall x',x''\in G\ \exists
+\text{ кривая }\gamma\subset G
+\text{ с концами в точках }x',x''.
+\]
+}
+
+\theorem[7]{
+Пусть $G$ --- область в $\mathbb R^d$, $f$ непрерывна на $\overline G$; $a,b\in\overline G$, $f(a)=A$, $f(b)=B$. Тогда
+\[
+\forall C\in[A,B]^*\ \exists \overline{\overline{c}}\in G\colon
+f(\overline{\overline{c}})=C.
+\]
+}
+
+\begin{proof}
+    \begin{enumerate}
+        \item Пусть $a,b\in G$. Тогда $\exists \varphi\colon[\alpha,\beta]\to G$:
+        \[
+        \varphi(t)=(\varphi_1(t),\dots,\varphi_d(t)),\qquad a=(\varphi_1(\alpha),\dots,\varphi_d(\alpha)),\qquad b=(\varphi_1(\beta),\dots,\varphi_d(\beta)).
+        \]
+        Причем $\varphi_l$ непрерывны на $[\alpha,\beta]$. Тогда по теореме 6
+        \[
+        F(t):=f(\varphi_1(t),\dots,\varphi_d(t))
+        \]
+        непрерывна на $[\alpha,\beta]$. По теореме Коши
+        \[
+        \exists t^*\in[\alpha,\beta]\colon C=F(t^*)=f(\varphi_1(t^*),\dots,\varphi_d(t^*)).
+        \]
+        Тогда по определению области $\overline{\overline{c}}=(\varphi_1(t^*),\dots,\varphi_d(t^*))\in G$.
+
+        \item Пусть $a,b\in\overline G$. Введем $\varepsilon=\min\{B-C,C-A\}$. Тогда $\exists \delta_a>0\colon \forall x\in U_{\delta_a}(a)\cap\overline G$ выполняется
+        \[
+        |f(x)-f(a)|<\varepsilon.
+        \]
+        Так как $a\in\overline G$, то $\exists a'\in G\cap U_{\delta_a}(a)$. Положим $A'=f(a')$. Тогда
+        \[
+        A'=f(a')<f(a)+\varepsilon=A+\varepsilon\leq A+(C-A)=C.
+        \]
+        Аналогично, $\exists \delta_b>0\colon \forall x\in U_{\delta_b}(b)\cap\overline G$ выполняется
+        \[
+        |f(x)-f(b)|<\varepsilon.
+        \]
+        Так как $b\in\overline G$, то $\exists b'\in G\cap U_{\delta_b}(b)$. Положим $B'=f(b')$. Тогда
+        \[
+        B'=f(b')>f(b)-\varepsilon=B-\varepsilon\geq B-(B-C)=C.
+        \]
+        Установили, что $A'$ слева от $C$, $B'$ справа от $C$. Следовательно, $C\in[A',B']$. Тогда по первому пункту
+        \[
+        \exists \overline{\overline{c}}\in G\colon f(\overline{\overline{c}})=C.
+        \]
+    \end{enumerate}
+\end{proof}
+
+\section{Дифференцируемость}
+\[
+x^0=(x_1^0,\dots,x_d^0),\qquad \Delta x=(\Delta x_1,\dots ,\Delta x_d),
+\]
+\[
+y=f(x),\qquad \Delta f=f(x^0+\Delta x)-f(x^0), \ x^0+\Delta x\in U_\delta(x^0).
+\]
+
+\definition{
+Функция $f$, определенная на $U_{\delta_0}(x^0)$, $x^0\in\mathbb R^d$, называется \textit{дифференцируемой в точке} $x^0$, если для любого допустимого приращения $\Delta x$
+\[
+\Delta f=\sum_{k=1}^d A_k\Delta x_k+\alpha(\Delta x),
+\]
+где $\alpha(\Delta x)=\|\Delta x\|\cdot\varepsilon(\Delta x)$; $\lim_{\Delta x\to\mathbb 0}\varepsilon(\Delta x)=0$.
+}
+
+\textit{Обозначим}
+\[
+\alpha(\Delta x)=\|\Delta x\|\cdot\varepsilon(\Delta x).\qquad (*)
+\]
+
+\definition{
+Линейная часть приращения функции
+\[
+\d f=\sum_{k=1}^d A_k\Delta x_k,\qquad A_k\in\mathbb R,
+\]
+называется \textit{дифференциалом функции} $f$ в точке $x^0$.
+}
+
+\lemma{
+В определении дифференцируемости $(*)$ можно заменить на \[ \alpha=\sum_{k=1}^d\varepsilon_k(\Delta x)\Delta x_k, \qquad (**) \] где $\lim_{\Delta x\to\mathbb 0}\varepsilon_k(\Delta x)=0$.
+}
+
 \newlection{16 сентября 2026 г.}
 
 \theorem[4]{
@@ -632,24 +777,16 @@ $x^0=(\varphi_1(t^0),\dots,\varphi_d(t^0))$.
 }
 
 \begin{proof}
-    $f$ определена в $U_{\delta^0}(x^0)$. \\
+    $f$ определена в $U_{\delta_0}(x^0)$. \\
     $\varphi_k$ непрерывна в точке $t^0$. Тогда $\exists\eta^0\colon \forall t\in U_{\eta^0}(t^0)$ выполняется
     \[
-    |\varphi_k(t)-x_k^0|<\frac{\delta^0}{\sqrt d}.
+    |\varphi_k(t)-x_k^0|<\frac{\delta_0}{\sqrt d}.
     \]
     Отсюда
     \[
-    \sqrt{\sum_{k=1}^d(\varphi_k(t)-x_k^0)^2}<\delta^0.
+    \sqrt{\sum_{k=1}^d(\varphi_k(t)-x_k^0)^2}<\delta_0.
     \]
-    Следовательно, $(\varphi_1(t),\dots,\varphi_d(t))\in U_{\delta^0}(x^0)$.
-
-    Зададим приращения
-    \[
-    \Delta\varphi_k=\varphi_k(t^0+\Delta t)-\varphi_k(t^0),
-    \]
-    \[
-    \Delta x_k=\Delta\varphi_k.
-    \]
+    Следовательно, $(\varphi_1(t),\dots,\varphi_d(t))\in U_{\delta_0}(x^0)$. Зададим приращения $\Delta\varphi_k=\varphi_k(t^0+\Delta t)-\varphi_k(t^0), \qquad \Delta x_k=\Delta\varphi_k$.
 
     Тогда, по определению дифференцируемости внешней функции $f$:
     \[
