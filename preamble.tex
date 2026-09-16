@@ -263,8 +263,11 @@
 \usepackage{changepage}  % для \blockindent
 
 % Леммы
-\newtheorem{lemma_env}{Лемма}[section]
-\newcommand{\lemma}[2][]{\begin{lemma_env}[#1]#2\end{lemma_env}}
+\NewDocumentCommand{\lemma}{o +m}{%
+    \par\noindent
+    \textbf{Лемма\IfValueT{#1}{ (#1)}.}~#2
+    \par
+}
 
 % Отступ (переименовано из \indent, чтобы не ломать ядро LaTeX)
 \newcommand{\blockindent}[1]{%
