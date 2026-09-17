@@ -6,6 +6,7 @@ import re
 
 ROOT = Path(__file__).resolve().parents[1]
 INDEX_PATH = ROOT / "index.html"
+README_PATH = ROOT / "README.md"
 
 SUBJECTS = [
     (
@@ -52,8 +53,10 @@ SUBJECTS = [
     ),
 ]
 
-START_MARKER = "<!-- PROGRESS_TABLE_START -->"
-END_MARKER = "<!-- PROGRESS_TABLE_END -->"
+HTML_START_MARKER = "<!-- PROGRESS_TABLE_START -->"
+HTML_END_MARKER = "<!-- PROGRESS_TABLE_END -->"
+README_START_MARKER = "<!-- README_PROGRESS_START -->"
+README_END_MARKER = "<!-- README_PROGRESS_END -->"
 NEWLECTION_RE = re.compile(r"\\newlection\s*\{([^{}]+)\}")
 
 
@@ -76,7 +79,7 @@ def latest_lection(tex_path: Path) -> str | None:
     return matches[-1].strip() if matches else None
 
 
-def build_table() -> str:
+def build_html_table() -> str:
     rows = []
 
     for subject_name, lecturer, tex_path, pdf_href in SUBJECTS:
@@ -97,7 +100,7 @@ def build_table() -> str:
         )
 
     return (
-        f"{START_MARKER}\n"
+        f"{HTML_START_MARKER}\n"
         '<table class="progress-table">\n'
         "  <thead>\n"
         "    <tr>\n"
@@ -109,24 +112,59 @@ def build_table() -> str:
         + "\n".join(rows)
         + "\n  </tbody>\n"
         "</table>\n"
-        f"{END_MARKER}"
+        f"{HTML_END_MARKER}"
     )
+
+
+def build_readme_table() -> str:
+    rows = [
+        "| Предмет | Последняя написанная лекция |",
+        "|---|---|",
+    ]
+
+    for subject_name, lecturer, tex_path, pdf_href in SUBJECTS:
+        latest = latest_lection(tex_path)
+        progress = f"Лекция от {latest}" if latest else "—"
+        rows.append(
+            f"| {lecturer}, [{subject_name}]({pdf_href}) | {progress} |"
+        )
+
+    return (
+        f"{README_START_MARKER}\n"
+        + "\n".join(rows)
+        + f"\n{README_END_MARKER}"
+    )
+
+
+def replace_marked_block(text: str, start_marker: str, end_marker: str, replacement: str) -> str:
+    if start_marker not in text or end_marker not in text:
+        raise RuntimeError(
+            f"Markers were not found: {start_marker!r} / {end_marker!r}"
+        )
+
+    before, rest = text.split(start_marker, 1)
+    _, after = rest.split(end_marker, 1)
+    return before + replacement + after
 
 
 def main() -> None:
     html = INDEX_PATH.read_text(encoding="utf-8")
+    html = replace_marked_block(
+        html,
+        HTML_START_MARKER,
+        HTML_END_MARKER,
+        build_html_table(),
+    )
+    INDEX_PATH.write_text(html, encoding="utf-8")
 
-    if START_MARKER not in html or END_MARKER not in html:
-        raise RuntimeError(
-            "Progress table markers were not found in index.html: "
-            f"{START_MARKER!r} / {END_MARKER!r}"
-        )
-
-    before, rest = html.split(START_MARKER, 1)
-    _, after = rest.split(END_MARKER, 1)
-    updated = before + build_table() + after
-
-    INDEX_PATH.write_text(updated, encoding="utf-8")
+    readme = README_PATH.read_text(encoding="utf-8")
+    readme = replace_marked_block(
+        readme,
+        README_START_MARKER,
+        README_END_MARKER,
+        build_readme_table(),
+    )
+    README_PATH.write_text(readme, encoding="utf-8")
 
     for subject_name, _, tex_path, _ in SUBJECTS:
         latest = latest_lection(tex_path)

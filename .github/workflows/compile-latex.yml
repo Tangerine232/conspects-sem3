@@ -60,7 +60,7 @@ jobs:
             )
           done < <(find subjects -type f -name '*.tex' -print0 | sort -z)
 
-      - name: Update lecture progress table
+      - name: Update lecture progress tables
         run: python scripts/update_progress.py
 
       - name: Upload PDFs for pull requests
@@ -70,12 +70,12 @@ jobs:
           name: compiled-conspects
           path: subjects/**/*.pdf
 
-      - name: Commit rebuilt PDFs and progress table
+      - name: Commit rebuilt PDFs and progress tables
         if: github.event_name == 'push'
         run: |
           git config user.name "actions-user"
           git config user.email "65916846+actions-user@users.noreply.github.com"
-          git add 'subjects/**/*.pdf' index.html
+          git add 'subjects/**/*.pdf' index.html README.md
           git diff --cached --quiet && exit 0
           git commit -m "Rebuild lecture PDFs and update progress"
           git push
