@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>Конспекты ПМИ ПМ-ПУ</title>
 
   <style>
@@ -13,99 +14,144 @@
 
     .progress-table th,
     .progress-table td {
-      border: 1px solid #b8b8b8;
+      border: 1px solid gray;
       padding: 8px 12px;
       text-align: left;
       vertical-align: top;
     }
 
     .lecturer {
-      font-size: 0.92em;
-      color: #555;
+      display: block;
+      margin-top: 2px;
     }
 
-    .not-started {
-      color: #777;
+    .lecture-progress {
+      white-space: nowrap;
     }
   </style>
 </head>
+
 <body>
   <h2>III семестр</h2>
 
-<!-- PROGRESS_TABLE_START -->
-<table class="progress-table">
-  <thead>
-    <tr>
-      <th>Предмет</th>
-      <th>Последняя написанная лекция</th>
-    </tr>
-  </thead>
-  <tbody>
+  <!-- PROGRESS_TABLE_START -->
+  <table class="progress-table">
+    <thead>
+      <tr>
+        <th>Предмет</th>
+        <th>Последняя написанная лекция</th>
+      </tr>
+    </thead>
+
+    <tbody>
       <tr>
         <td>
-          <a href="subjects/01-theoretical-mechanics/theormech.pdf">Теоретическая механика</a><br>
+          <a href="subjects/01-theoretical-mechanics/theormech.pdf">
+            Теоретическая механика
+          </a>
           <span class="lecturer">Ирина Юрьевна Потоцкая</span>
         </td>
-        <td><span class="lecture-progress">Лекция от 1 сентября 2026 г.</span></td>
+        <td>
+          <span class="lecture-progress">
+            Лекция от 1 сентября 2026 г.
+          </span>
+        </td>
       </tr>
+
       <tr>
         <td>
-          <a href="subjects/02-mathematical-analysis/matan.pdf">Математический анализ</a><br>
+          <a href="subjects/02-mathematical-analysis/matan.pdf">
+            Математический анализ
+          </a>
           <span class="lecturer">Мария Александровна Скопина</span>
         </td>
-        <td><span class="lecture-progress">Лекция от 16 сентября 2026 г.</span></td>
+        <td>
+          <span class="lecture-progress">
+            Лекция от 16 сентября 2026 г.
+          </span>
+        </td>
       </tr>
+
       <tr>
         <td>
-          <a href="subjects/03-complex-analysis/tfcv.pdf">Теория функций комплексной переменной</a><br>
+          <a href="subjects/03-complex-analysis/tfcv.pdf">
+            Теория функций комплексной переменной
+          </a>
           <span class="lecturer">Александр Дмитриевич Овсянников</span>
         </td>
-        <td><span class="not-started">—</span></td>
+        <td>—</td>
       </tr>
+
       <tr>
         <td>
-          <a href="subjects/04-group-theory-number-theory/gtnt.pdf">Теория групп и теория чисел</a><br>
+          <a href="subjects/04-group-theory-number-theory/gtnt.pdf">
+            Теория групп и теория чисел
+          </a>
           <span class="lecturer">Александр Владимирович Кривошеин</span>
         </td>
-        <td><span class="lecture-progress">Лекция от 4 сентября 2026 г.</span></td>
+        <td>
+          <span class="lecture-progress">
+            Лекция от 4 сентября 2026 г.
+          </span>
+        </td>
       </tr>
+
       <tr>
         <td>
-          <a href="subjects/05-differential-equations/di_furry.pdf">Дифференциальные уравнения</a><br>
+          <a href="subjects/05-differential-equations/di_furry.pdf">
+            Дифференциальные уравнения
+          </a>
           <span class="lecturer">Алексей Петрович Жабко</span>
         </td>
-        <td><span class="lecture-progress">Лекция от 5 сентября 2026 г.</span></td>
+        <td>
+          <span class="lecture-progress">
+            Лекция от 5 сентября 2026 г.
+          </span>
+        </td>
       </tr>
+
       <tr>
         <td>
-          <a href="subjects/06-numerical-methods/chislaki.pdf">Численные методы</a><br>
+          <a href="subjects/06-numerical-methods/chislaki.pdf">
+            Численные методы
+          </a>
           <span class="lecturer">Сергей Иванович Перегудин</span>
         </td>
-        <td><span class="not-started">—</span></td>
+        <td>—</td>
       </tr>
+
       <tr>
         <td>
-          <a href="subjects/07-databases-network-technologies/bdst.pdf">Базы данных и сетевые технологии</a><br>
+          <a href="subjects/07-databases-network-technologies/bdst.pdf">
+            Базы данных и сетевые технологии
+          </a>
           <span class="lecturer">Мария Анатольевна Малинина</span>
         </td>
-        <td><span class="not-started">—</span></td>
+        <td>—</td>
       </tr>
-  </tbody>
-</table>
-<!-- PROGRESS_TABLE_END -->
+    </tbody>
+  </table>
+  <!-- PROGRESS_TABLE_END -->
 
   <p>
     Исходники конспектов в формате LaTeX хранятся в
-    <a href="https://github.com/Tangerine232/conspects-sem3">GitHub-репозитории</a>.
+    <a href="https://github.com/Tangerine232/conspects-sem3">
+      GitHub-репозитории
+    </a>.
   </p>
 
   <h2>Исправления</h2>
 
-  <p>Если вы нашли ошибку, неточность или опечатку, можете:</p>
+  <p>
+    Если вы нашли ошибку, неточность или опечатку, можете:
+  </p>
 
   <ul>
     <li>создать pull request с исправлением;</li>
-    <li>написать в Telegram: <a href="https://t.me/Tangerine232">@Tangerine232</a>.</li>
+    <li>
+      написать в Telegram:
+      <a href="https://t.me/Tangerine232">@Tangerine232</a>.
+    </li>
   </ul>
 </body>
 </html>
