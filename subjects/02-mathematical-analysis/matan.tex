@@ -703,8 +703,254 @@ y=f(x),\qquad \Delta f=f(x^0+\Delta x)-f(x^0), \ x^0+\Delta x\in U_\delta(x^0).
 }
 
 \lemma{
-В определении дифференцируемости $(*)$ можно заменить на \[ \alpha=\sum_{k=1}^d\varepsilon_k(\Delta x)\Delta x_k, \qquad (**) \] где $\lim_{\Delta x\to\mathbb 0}\varepsilon_k(\Delta x)=0$.
+В определении дифференцируемости $(*)$ можно заменить на
+\[
+\alpha=\sum_{k=1}^d\varepsilon_k(\Delta x)\Delta x_k, \qquad (**)
+\]
+где $\lim_{\Delta x\to\mathbb 0}\varepsilon_k(\Delta x)=0$.
 }
+
+\begin{proof}
+    \begin{enumerate}
+        \item[$(**)\Longrightarrow(*)$]
+        Пусть $(**)$ выполнено. Тогда
+        \[
+        \alpha(\Delta x)=\|\Delta x\|\sum_{k=1}^d\varepsilon_k(\Delta x)\frac{\Delta x_k}{\|\Delta x\|}.
+        \]
+        По определению нормы $\|\Delta x\|=\sqrt{\sum_{k=1}^d(\Delta x_k)^2}$, поэтому $|\Delta x_k|\leq\|\Delta x\|$ и $\left|\frac{\Delta x_k}{\|\Delta x\|}\right|\leq1$. Так как $\varepsilon_k(\Delta x)\to0$, то
+        \[
+        \sum_{k=1}^d\varepsilon_k(\Delta x)\frac{\Delta x_k}{\|\Delta x\|}\to0.
+        \]
+        Обозначим
+        \[
+        \varepsilon(\Delta x):=\sum_{k=1}^d\varepsilon_k(\Delta x)\frac{\Delta x_k}{\|\Delta x\|}.
+        \]
+        Тогда $\varepsilon(\Delta x)\to0$ и $\alpha(\Delta x)=\|\Delta x\|\varepsilon(\Delta x)$, то есть выполняется $(*)$.
+
+        \item[$(*)\Longrightarrow(**)$]
+        Пусть $(*)$ выполнено. Тогда
+        \[
+        \alpha(\Delta x)=\|\Delta x\|\varepsilon(\Delta x)
+        =\frac{\|\Delta x\|^2}{\|\Delta x\|}\varepsilon(\Delta x)
+        =\frac{1}{\|\Delta x\|}\sum_{k=1}^d\Delta x_k\Delta x_k\cdot\varepsilon(\Delta x)
+        =\sum_{k=1}^d\Delta x_k\cdot
+        \underbrace{\frac{\Delta x_k}{\|\Delta x\|}\varepsilon(\Delta x)}_{\varepsilon_k(\Delta x)\to0}.
+        \]
+        Положим
+        \[
+        \varepsilon_k(\Delta x):=\frac{\Delta x_k}{\|\Delta x\|}\varepsilon(\Delta x).
+        \]
+        Так как $\left|\frac{\Delta x_k}{\|\Delta x\|}\right|\leq1$ и $\varepsilon(\Delta x)\to0$, то $\varepsilon_k(\Delta x)\to0$. Следовательно,
+        \[
+        \alpha(\Delta x)=\sum_{k=1}^d\varepsilon_k(\Delta x)\Delta x_k,
+        \]
+        то есть выполняется $(**)$.
+    \end{enumerate}
+\end{proof}
+
+Из определения дифференцируемости
+\[
+\Delta f=\sum_{k=1}^d A_k\Delta x_k+\alpha(\Delta x).
+\]
+
+По лемме
+\[
+\alpha(\Delta x)=\sum_{k=1}^d\varepsilon_k(\Delta x)\Delta x_k.
+\]
+
+Поэтому
+\encircle{
+\Delta f=\sum_{k=1}^d\left(A_k+\varepsilon_k(\Delta x)\right)\Delta x_k.
+}
+
+\theorem[1]{
+Пусть $f$ дифференцируема в точке $x^0$. Тогда $f$ непрерывна в $x^0$.
+}
+
+\begin{proof}
+    Рассмотрим $(**)$. Возьмем $0<\varepsilon\leq1$. Так как $\varepsilon_k(\Delta x)\to0$ при $\Delta x\to\mathbb 0$, то $\exists\delta_0>0\colon$
+    \[
+    \forall \Delta x\in U_{\delta_0}(\mathbb 0) \ \text{выполняется} \ |\varepsilon_k(\Delta x)|<\frac{1}{d}, \qquad k=\overline{1,d}.
+    \]
+    Выберем такое $\delta_0$, чтобы $|\varepsilon_k(\Delta x)|<\frac{1}{d}$.
+
+    Пусть $\delta<\delta_0$, $\Delta x\in U_\delta(\mathbb 0)$. Тогда по $(**)$
+    \[
+    \Delta f=\sum_{k=1}^d\left(A_k+\varepsilon_k(\Delta x)\right)\Delta x_k.
+    \]
+    Так как $|\Delta x_k|\leq\|\Delta x\|<\delta$, то выполняется
+    \[
+    |\Delta f|
+    \leq\sum_{k=1}^d\left(|A_k|+|\varepsilon_k(\Delta x)|\right)|\Delta x_k|
+    \leq\left(\sum_{k=1}^d|A_k|+\sum_{k=1}^d|\varepsilon_k(\Delta x)|\right)\delta.
+    \]
+    Так как
+    \[
+    \sum_{k=1}^d|\varepsilon_k(\Delta x)|<\sum_{k=1}^d\frac{1}{d}=1,
+    \]
+    то выполняется
+    \[
+    |\Delta f|\leq\left(|A_1|+\dots+|A_d|+1\right)\delta.
+    \]
+    Выберем
+    \[
+    \delta=\min\left\{\delta_0,\frac{\varepsilon}{\sum_{k=1}^d|A_k|+1}\right\}.
+    \]
+    Тогда выполняется
+    \[
+    |\Delta f|<\varepsilon.
+    \]
+    Следовательно, $f$ непрерывна в точке $x^0$.
+\end{proof}
+
+\definition{
+Пусть $f$ определена в некоторой окрестности точки $x^0\in\mathbb R^d$, $k=\overline{1,d}$. Рассмотрим
+\[
+F(\lambda)=f(x_1^0,\dots,x_{k-1}^0,x_k^0+\lambda,x_{k+1}^0,\dots,x_d^0).
+\]
+Тогда
+\[
+F'(0)=:f_{x_k}'(x^0)=\frac{\partial f}{\partial x_k}(x^0)=\frac{\partial f}{\partial x_k}(x_1^0,\dots,x_d^0),
+\]
+где
+\[
+\underbrace{\frac{\partial f}{\partial x_k}}_{\frac{\partial f}{\partial x_k}(x^0)}
+=\lim_{\lambda\to0}
+\frac{
+f(x_1^0,\dots,x_{k-1}^0,x_k^0+\lambda,x_{k+1}^0,\dots,x_d^0)
+-f(x_1^0,\dots,x_d^0)
+}{\lambda}.
+\]
+}
+
+\theorem[2]{
+Пусть $f$ дифференцируема в $x^0\in\mathbb R^d$. Тогда $\forall k=\overline{1,d}\ \exists \frac{\partial f}{\partial x_k}(x^0)=A_k$, где $A_k$ --- числа из определения дифференцируемости функции.
+}
+
+\begin{proof}
+    Рассмотрим $k$. Возьмем
+    \[
+    \Delta x=(0,\dots,0,\Delta x_k,0,\dots,0).
+    \]
+    Тогда по $(**)$
+    \[
+    \Delta f=(A_k+\varepsilon_k(\Delta x))\Delta x_k.
+    \]
+    Следовательно,
+    \[
+    \lim_{\Delta x_k\to0}\frac{\Delta f}{\Delta x_k}
+    =\lim_{\Delta x_k\to0}\frac{A_k\Delta x_k+\varepsilon_k(\Delta x)\Delta x_k}{\Delta x_k}
+    =\lim_{\Delta x_k\to0}\left(A_k+\varepsilon_k(\Delta x)\right)=A_k.
+    \]
+    По определению частной производной
+    \[
+    \frac{\partial f}{\partial x_k}(x^0)=A_k.
+    \]
+\end{proof}
+
+\corollary{
+Пусть $f$ дифференцируема в точке $x^0$. Тогда
+\[
+\Delta y=\Delta f=\sum_{k=1}^d f_{x_k}'(x^0)\Delta x_k+\alpha(\Delta x), \qquad \d f(x^0,\Delta x)=\d f=\sum_{k=1}^d f_{x_k}'(x^0)\Delta x_k.
+\]
+}
+
+\example{
+\[
+f(x,y)=
+\begin{cases}
+    \dfrac{x^2y}{x^2+y^2}, & x^2+y^2\neq0,\\
+    0, & x^2+y^2=0,
+\end{cases}
+\qquad x^0=(0,0), \qquad f(x^0)=0.
+\]
+
+Рассмотрим приращение $(\Delta x,0)$. Тогда
+\[
+\frac{\partial f}{\partial x}(\mathbb 0)
+=\lim_{\Delta x\to0}\frac{f(\Delta x,0)-f(0,0)}{\Delta x}
+=\lim_{\Delta x\to0}\frac{0}{\Delta x}=0.
+\]
+Аналогично, для приращения $(0,\Delta y)$
+\[
+\frac{\partial f}{\partial y}(\mathbb 0)
+=\lim_{\Delta y\to0}\frac{f(0,\Delta y)-f(0,0)}{\Delta y}
+=\lim_{\Delta y\to0}\frac{0}{\Delta y}=0.
+\]
+Следовательно,
+\[
+\frac{\partial f}{\partial x}(\mathbb 0)=\frac{\partial f}{\partial y}(\mathbb 0)=0.
+\]
+
+Проверим дифференцируемость. Так как $A_1=A_2=0$, то должно выполняться
+\[
+\Delta f=\alpha(\Delta x,\Delta y)
+=\sqrt{(\Delta x)^2+(\Delta y)^2}\,\varepsilon(\Delta x,\Delta y),
+\qquad \varepsilon(\Delta x,\Delta y)\to0.
+\]
+Отсюда
+\[
+\varepsilon(\Delta x,\Delta y)
+=\frac{\Delta f}{\sqrt{(\Delta x)^2+(\Delta y)^2}}
+=\frac{\Delta x^2\Delta y}
+{\left((\Delta x)^2+(\Delta y)^2\right)^{\frac{3}2}}.
+\]
+Положим $\Delta x=\Delta y$. Тогда
+\[
+\varepsilon(\Delta x,\Delta x)
+=\frac{(\Delta x)^3}{\left(2(\Delta x)^2\right)^{3/2}}
+=\frac{(\Delta x)^3}{2\sqrt2\,|\Delta x|^3}.
+\]
+Следовательно, при $\Delta x\to0$ функция $\varepsilon(\Delta x,\Delta x)$ не имеет предела и, в частности, не стремится к нулю.
+
+Таким образом, условие $(*)$ не выполняется, и $f$ не дифференцируема в точке $\mathbb 0$.
+
+Итак, существование частных производных не является достаточным условием дифференцируемости функции.
+}
+
+\theorem[3]{
+Пусть $f$ имеет частные производные $\frac{\partial f}{\partial x}$, $\frac{\partial f}{\partial y}$ в некоторой окрестности точки $(x^0,y^0)$ и $\frac{\partial f}{\partial x}$, $\frac{\partial f}{\partial y}$ непрерывны в точке $(x^0,y^0)$. Тогда $f$ дифференцируема в точке $(x^0,y^0)$.
+}
+
+\begin{proof}
+    \[
+    x=x^0+\Delta x, \qquad y=y^0+\Delta y.
+    \]
+    Добавим и вычтем $f(x,y^0)$:
+    \[
+    \Delta f=f(x,y)-f(x^0,y^0)=f(x,y)-f(x,y^0)+f(x,y^0)-f(x^0,y^0).
+    \]
+    По теореме Лагранжа
+    \[
+    \Delta f=
+    \frac{\partial f}{\partial y}(x,y^0+\theta_1\Delta y)\Delta y+
+    \frac{\partial f}{\partial x}(x^0+\theta_2\Delta x,y^0)\Delta x,
+    \qquad 0<\theta_1,\theta_2<1.
+    \]
+    При $\Delta x\to0$, $\Delta y\to0$ выполняется
+    \[
+    (x,y^0+\theta_1\Delta y)\to(x^0,y^0), \qquad
+    (x^0+\theta_2\Delta x,y^0)\to(x^0,y^0).
+    \]
+    Так как частные производные непрерывны в точке $(x^0,y^0)$, то
+    \[
+    \frac{\partial f}{\partial y}(x,y^0+\theta_1\Delta y)
+    =\frac{\partial f}{\partial y}(x^0,y^0)+\varepsilon_2(\Delta x,\Delta y),
+    \]
+    \[
+    \frac{\partial f}{\partial x}(x^0+\theta_2\Delta x,y^0)
+    =\frac{\partial f}{\partial x}(x^0,y^0)+\varepsilon_1(\Delta x,\Delta y),
+    \]
+    где $\varepsilon_1(\Delta x,\Delta y)\to0$, $\varepsilon_2(\Delta x,\Delta y)\to0$ при $(\Delta x,\Delta y)\to\mathbb 0$. Следовательно,
+    \[
+    \Delta f=
+    \frac{\partial f}{\partial x}(x^0,y^0)\Delta x+
+    \frac{\partial f}{\partial y}(x^0,y^0)\Delta y+
+    \varepsilon_1(\Delta x,\Delta y)\Delta x+
+    \varepsilon_2(\Delta x,\Delta y)\Delta y.
+    \]
+    Получено $(**)$, следовательно, $f$ дифференцируема в точке $(x^0,y^0)$.
+\end{proof}
 
 \newlection{16 сентября 2026 г.}
 
