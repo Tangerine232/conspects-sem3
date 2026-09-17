@@ -6,12 +6,14 @@ on:
     paths:
       - "subjects/**/*.tex"
       - "preamble.tex"
+      - "scripts/update_progress.py"
       - ".github/workflows/compile-latex.yml"
   pull_request:
     branches: [main]
     paths:
       - "subjects/**/*.tex"
       - "preamble.tex"
+      - "scripts/update_progress.py"
 
 permissions:
   contents: write
@@ -27,6 +29,11 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: "3.13"
 
       - name: Install LaTeX
         run: |
@@ -53,6 +60,9 @@ jobs:
             )
           done < <(find subjects -type f -name '*.tex' -print0 | sort -z)
 
+      - name: Update lecture progress table
+        run: python scripts/update_progress.py
+
       - name: Upload PDFs for pull requests
         if: github.event_name == 'pull_request'
         uses: actions/upload-artifact@v4
@@ -60,13 +70,12 @@ jobs:
           name: compiled-conspects
           path: subjects/**/*.pdf
 
-      - name: Commit rebuilt PDFs
+      - name: Commit rebuilt PDFs and progress table
         if: github.event_name == 'push'
         run: |
           git config user.name "actions-user"
           git config user.email "65916846+actions-user@users.noreply.github.com"
-          git add 'subjects/**/*.pdf'
+          git add 'subjects/**/*.pdf' index.html
           git diff --cached --quiet && exit 0
-          git commit -m "Rebuild lecture PDFs"
+          git commit -m "Rebuild lecture PDFs and update progress"
           git push
-
