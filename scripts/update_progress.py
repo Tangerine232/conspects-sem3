@@ -10,36 +10,43 @@ INDEX_PATH = ROOT / "index.html"
 SUBJECTS = [
     (
         "Теоретическая механика",
+        "Ирина Юрьевна Потоцкая",
         ROOT / "subjects/01-theoretical-mechanics/theormech.tex",
         "subjects/01-theoretical-mechanics/theormech.pdf",
     ),
     (
         "Математический анализ",
+        "Мария Александровна Скопина",
         ROOT / "subjects/02-mathematical-analysis/matan.tex",
         "subjects/02-mathematical-analysis/matan.pdf",
     ),
     (
         "Теория функций комплексной переменной",
+        "Александр Дмитриевич Овсянников",
         ROOT / "subjects/03-complex-analysis/tfcv.tex",
         "subjects/03-complex-analysis/tfcv.pdf",
     ),
     (
         "Теория групп и теория чисел",
+        "Александр Владимирович Кривошеин",
         ROOT / "subjects/04-group-theory-number-theory/gtnt.tex",
         "subjects/04-group-theory-number-theory/gtnt.pdf",
     ),
     (
         "Дифференциальные уравнения",
+        "Алексей Петрович Жабко",
         ROOT / "subjects/05-differential-equations/di_furry.tex",
         "subjects/05-differential-equations/di_furry.pdf",
     ),
     (
         "Численные методы",
+        "Сергей Иванович Перегудин",
         ROOT / "subjects/06-numerical-methods/chislaki.tex",
         "subjects/06-numerical-methods/chislaki.pdf",
     ),
     (
         "Базы данных и сетевые технологии",
+        "Мария Анатольевна Малинина",
         ROOT / "subjects/07-databases-network-technologies/bdst.tex",
         "subjects/07-databases-network-technologies/bdst.pdf",
     ),
@@ -51,7 +58,6 @@ NEWLECTION_RE = re.compile(r"\\newlection\s*\{([^{}]+)\}")
 
 
 def strip_comments(text: str) -> str:
-    """Remove ordinary LaTeX comments while keeping escaped percent signs."""
     cleaned_lines = []
     for line in text.splitlines():
         match = re.search(r"(?<!\\)%", line)
@@ -73,7 +79,7 @@ def latest_lection(tex_path: Path) -> str | None:
 def build_table() -> str:
     rows = []
 
-    for subject_name, tex_path, pdf_href in SUBJECTS:
+    for subject_name, lecturer, tex_path, pdf_href in SUBJECTS:
         latest = latest_lection(tex_path)
         if latest:
             progress = f'<span class="lecture-progress">Лекция от {escape(latest)}</span>'
@@ -82,7 +88,10 @@ def build_table() -> str:
 
         rows.append(
             "      <tr>\n"
-            f'        <td><a href="{escape(pdf_href, quote=True)}">{escape(subject_name)}</a></td>\n'
+            "        <td>\n"
+            f'          <a href="{escape(pdf_href, quote=True)}">{escape(subject_name)}</a><br>\n'
+            f'          <span class="lecturer">{escape(lecturer)}</span>\n'
+            "        </td>\n"
             f"        <td>{progress}</td>\n"
             "      </tr>"
         )
@@ -119,7 +128,7 @@ def main() -> None:
 
     INDEX_PATH.write_text(updated, encoding="utf-8")
 
-    for subject_name, tex_path, _ in SUBJECTS:
+    for subject_name, _, tex_path, _ in SUBJECTS:
         latest = latest_lection(tex_path)
         print(f"{subject_name}: {latest or '—'}")
 
